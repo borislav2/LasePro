@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lase Pro - Precision Laser Cleaning | Varna, Bulgaria</title>
+    <title>Lase Pro - Прецизно лазерно почистване </title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -542,7 +542,6 @@
                 <div class="text-center">
                     <h4 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">{{ __('messages.quick_links') }}</h4>
                     <div class="space-y-2">
-                        <a href="#services" class="block transition-colors" style="color: var(--text-ocean);" onmouseover="this.style.color='var(--ocean-blue)'" onmouseout="this.style.color='var(--text-ocean)'">{{ __('messages.services_footer') }}</a>
                         <a href="#gallery" class="block transition-colors" style="color: var(--text-ocean);" onmouseover="this.style.color='var(--ocean-blue)'" onmouseout="this.style.color='var(--text-ocean)'">{{ __('messages.gallery') }}</a>
                         <a href="#contact" class="block transition-colors" style="color: var(--text-ocean);" onmouseover="this.style.color='var(--ocean-blue)'" onmouseout="this.style.color='var(--text-ocean)'">{{ __('messages.contact_footer') }}</a>
                     </div>
