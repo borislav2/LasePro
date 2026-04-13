@@ -157,15 +157,12 @@
 
         <!-- CTA Section -->
         <div class="mt-16 text-center">
-            <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl p-8 md:p-12 text-white">
-                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4">
+            <div class="bg-gradient-to-r from-cyan-700 to-blue-800 rounded-2xl p-8 md:p-12 shadow-xl">
+                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4" style="color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
                     {{ __('messages.ready_to_transform') ?? 'Ready to Transform Your Surfaces?' }}
                 </h2>
-                <p class="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-                    {{ __('messages.get_quote_cta') ?? 'Get a free quote for your laser cleaning project. We handle wood, stone, and metal surfaces.' }}
-                </p>
-                <a href="{{ route('home') }}#quote" 
-                   class="inline-flex items-center px-8 py-4 bg-white text-cyan-600 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-lg hover:shadow-xl">
+                <a href="{{ route('home') }}#contact" 
+                   class="inline-flex items-center px-8 py-4 bg-white text-cyan-800 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-lg hover:shadow-xl">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
