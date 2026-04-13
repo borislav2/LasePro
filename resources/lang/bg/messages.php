@@ -32,7 +32,7 @@ return [
     'deep_rust_elimination' => 'Дълбоко премахване на ръжда',
     'surface_restored' => 'Повърхността възстановена',
     'stone_restoration_title' => 'Възстановяване на камък',
-    'natural_stone_cleaning' => 'Почистване на естествен камък',
+    'natural_stone_cleaning' => 'Почистване на камък',
     'historic_preservation' => 'Запазване на историята',
     'restoration_mastery' => 'Майсторство на възстановяването',
     'monument_restoration' => 'Реставрация на паметници',

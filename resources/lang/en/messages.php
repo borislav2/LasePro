@@ -32,7 +32,7 @@ return [
     'deep_rust_elimination' => 'Deep rust elimination',
     'surface_restored' => 'Surface restored',
     'stone_restoration_title' => 'Stone Restoration',
-    'natural_stone_cleaning' => 'Natural stone cleaning',
+    'natural_stone_cleaning' => 'Stone cleaning',
     'historic_preservation' => 'Historic preservation',
     'restoration_mastery' => 'Restoration mastery',
     'monument_restoration' => 'Monument restoration',
