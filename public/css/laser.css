@@ -499,10 +499,19 @@
 
 /* Paragraphs - Fresh Theme */
 .text-xl, .text-2xl, .text-lg, .text-base {
-    font-family: 'Inter', 'Montserrat', sans-serif;
+    font-family: 'Open Sans', 'Inter', 'Montserrat', sans-serif;
     color: var(--text-ocean) !important;
     -webkit-text-fill-color: var(--text-ocean) !important;
-    line-height: 1.6;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+}
+
+p {
+    font-family: 'Open Sans', 'Inter', 'Montserrat', sans-serif;
+    color: var(--text-ocean) !important;
+    -webkit-text-fill-color: var(--text-ocean) !important;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
 }
 
 /* Accent Text - Fresh Theme */
