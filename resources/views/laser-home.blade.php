@@ -29,6 +29,7 @@
         
         .tech-font {
             font-family: 'Orbitron', monospace;
+            
         }
         .brand-heading {
             color: var(--text-dark) !important;
@@ -197,183 +198,258 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative h-screen flex items-center justify-center hero-bg overflow-hidden">
+    <!-- WOOD Section - Fullscreen -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden" id="wood">
         <!-- Video Background -->
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="{{ asset('images/introvideo.mp4') }}" type="video/mp4">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+            <source src="{{ asset('images/IMG_2945.mp4') }}" type="video/mp4">
         </video>
-        <!-- Overlay to fade video text at bottom -->
-        <div class="hero-overlay"></div>
-        <!-- Particles -->
-        <div id="particles" class="absolute inset-0 pointer-events-none z-[2]"></div>
-        <div class="laser-beam-container absolute inset-0 z-[2]">
-            <div class="laser-beam"></div>
-            <div class="laser-beam"></div>
-        </div>
-        <!-- Hero Content -->
-        <div class="max-w-7xl mx-auto text-center relative z-10 pt-20">
-            <div class="fade-in-up">
-               
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tech-font">
-                 <span class="block brand-heading">{{ __('messages.hero_title') }}</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed" style="color: var(--text-ocean);">
-                    {{ __('messages.hero_description') }}
-                </p>
-                
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 text-center text-white px-4">
+            <div class="text-6xl mb-4">🪵</div>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.wood_restoration') }}</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.paint_removal') }}</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openGallery('wood', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    {{ __('messages.gallery') }}
+                </button>
+                <button onclick="openGallery('wood', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {{ __('messages.videos') }}
+                </button>
             </div>
         </div>
-
-        <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div class="w-6 h-10 border-2 rounded-full flex justify-center" style="border-color: var(--cyan-blue);">
-                <div class="w-1 h-3 rounded-full mt-2 animate-pulse" style="background: var(--cyan-blue);"></div>
-            </div>
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
         </div>
     </section>
 
 
-    <!-- Stone Cleaning Section with Video -->
-    <section id="stone-cleaning" class="py-20 section-gradient-2">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-r from-[var(--soft-sky)]/50 to-transparent"></div>
+    <!-- STONE Section - Fullscreen -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden" id="stone">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+            <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 text-center text-white px-4">
+            <div class="text-6xl mb-4">🏛️</div>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.natural_stone_cleaning') }}</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.stone_granite_marble') }}</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openGallery('stone', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    {{ __('messages.gallery') }}
+                </button>
+                <button onclick="openGallery('stone', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {{ __('messages.videos') }}
+                </button>
             </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">🏛️</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">{{ __('messages.natural_stone_cleaning') }}</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    {{ __('messages.stone_granite_marble') }}<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">{{ __('messages.restoration_mastery') }}</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.monument_restoration') }}</span>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </div>
+    </section>
+
+    <!-- METAL Section - Fullscreen -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden" id="metal">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+            <source src="{{ asset('images/0-02-05-ec5e4a233a114682bb1975ce54ef60b40c89ae6a015002ecf865918dd516a592_cd1975d9abc04f06.mp4') }}" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 text-center text-white px-4">
+            <div class="text-6xl mb-4">⚙️</div>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.metal_treatment') }}</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.weld_seam_cleaning') }}</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openGallery('metal', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    {{ __('messages.gallery') }}
+                </button>
+                <button onclick="openGallery('metal', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {{ __('messages.videos') }}
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Gallery Section with Tabs -->
+    <section id="gallery-section" class="py-20 section-gradient-1">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-4" style="color: var(--text-body);">{{ __('messages.our_works') }}</h2>
+                
+                <!-- Material Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mb-6" id="material-tabs">
+                    <button class="gallery-tab active px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('wood')" data-material="wood">{{ __('messages.wood') }}</button>
+                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('stone')" data-material="stone">{{ __('messages.stone') }}</button>
+                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('metal')" data-material="metal">{{ __('messages.metal') }}</button>
+                </div>
+                
+                <!-- Type Tabs -->
+                <div class="flex justify-center gap-2" id="type-tabs">
+                    <button class="gallery-tab active px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchType('images')" data-type="images">{{ __('messages.photos') }}</button>
+                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchType('videos')" data-type="videos">{{ __('messages.videos') }}</button>
+                </div>
+            </div>
+            
+            <!-- Gallery Content -->
+            <div id="gallery-content" class="min-h-[400px]">
+                <!-- Wood Images -->
+                <div id="wood-images" class="gallery-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/wood3.png') }}" alt="Wood work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
                     </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.facade_cleaning') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.graffiti_removal_option') }}</span>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/viber_image_2026-03-24_00-31-15-815.jpg') }}" alt="Wood work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
+                
+                <!-- Wood Videos -->
+                <div id="wood-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/wood1.MOV') }}" type="video/quicktime">
+                        </video>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/wood2.mov') }}" type="video/quicktime">
+                        </video>
+                    </div>
+                </div>
+                
+                <!-- Stone Images -->
+                <div id="stone-images" class="gallery-content hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/1774304238932155.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/1774304515818586.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/1774304544768486.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/1774304579347529.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/1774304653801954.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                </div>
+                
+                <!-- Stone Videos -->
+                <div id="stone-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                
+                <!-- Metal Images -->
+                <div id="metal-images" class="gallery-content hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/metal3.png') }}" alt="Metal work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                        <img src="{{ asset('images/viber_image_2026-03-24_00-31-16-252.jpg') }}" alt="Metal work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    </div>
+                </div>
+                
+                <!-- Metal Videos -->
+                <div id="metal-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/metal1.MOV') }}" type="video/quicktime">
+                        </video>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/metal2.mov') }}" type="video/quicktime">
+                        </video>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/0-02-05-09ad9d5c51bae851cb4bd32ac4dd7e6183ba6dc255a3faf05eec24ebd3a42e04_dadf0975ec81556.mp4') }}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="{{ asset('images/0-02-05-81a2c377d0eeb74a93ec0362ae579153d67cbfe09835b4400df50991cda73098_867459268cdac9b3.mp4') }}" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Wood Restoration Section with Video -->
-    <section id="wood-restoration" class="py-20 section-gradient-1">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/IMG_2945.mp4') }}" type="video/mp4">
-                    Your browser does not support video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-l from-[var(--soft-sky)]/50 to-transparent"></div>
-            </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">🪵</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">{{ __('messages.surface_prep') }}</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    {{ __('messages.paint_removal') }}<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">{{ __('messages.wood_restoration') }}</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.lacquer_stripping') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.primer_removal') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.surface_preparation') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.no_chemical_use') }}</span>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <style>
+        .gallery-tab { background: transparent; color: var(--text-body); }
+        .gallery-tab.active { background: #22d3ee; color: white; border-color: #22d3ee; }
+        .gallery-tab:hover:not(.active) { background: rgba(34, 211, 238, 0.1); }
+    </style>
 
-    <!-- Metal Treatment Section with Video -->
-    <section id="metal-treatment" class="py-20 section-gradient-2">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/0-02-05-ec5e4a233a114682bb1975ce54ef60b40c89ae6a015002ecf865918dd516a592_cd1975d9abc04f06.mp4') }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-r from-[var(--soft-sky)]/50 to-transparent"></div>
-            </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">⚙️</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">{{ __('messages.metal_treatment') }}</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    {{ __('messages.weld_seam_cleaning') }}<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">{{ __('messages.perfect_for_welding') }}</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.oxidation_removal') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.surface_preparation') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.no_chemical_use') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">{{ __('messages.metal_surface_preparation') }}</span>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script>
+        // Gallery State
+        let currentMaterial = 'wood';
+        let currentType = 'images';
+        
+        function switchMaterial(material) {
+            currentMaterial = material;
+            updateGalleryTabs();
+            showGalleryContent();
+        }
+        
+        function switchType(type) {
+            currentType = type;
+            updateGalleryTabs();
+            showGalleryContent();
+        }
+        
+        function openGallery(material, type) {
+            currentMaterial = material;
+            currentType = type;
+            document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+            updateGalleryTabs();
+            showGalleryContent();
+        }
+        
+        function updateGalleryTabs() {
+            // Update material tabs
+            document.querySelectorAll('#material-tabs .gallery-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.material === currentMaterial);
+            });
+            
+            // Update type tabs
+            document.querySelectorAll('#type-tabs .gallery-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.type === currentType);
+            });
+        }
+        
+        function showGalleryContent() {
+            // Hide all
+            document.querySelectorAll('.gallery-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('grid');
+            });
+            
+            // Show current
+            const targetId = `${currentMaterial}-${currentType}`;
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('grid');
+            }
+        }
+        
+        // Initialize
+        showGalleryContent();
+    </script>
 
     <!-- Industrial Cleaning Section with Video -->
      <section id="industrial-cleaning" class="py-20 section-gradient-1">
