@@ -236,8 +236,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🪵</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.wood_restoration') }}</h2>
-            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.paint_removal') }}</p>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.wood_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($woodMedia->count() > 0)
@@ -282,8 +281,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🏛️</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.natural_stone_cleaning') }}</h2>
-            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.stone_granite_marble') }}</p>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.stone_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($stoneMedia->count() > 0)
@@ -327,8 +325,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">⚙️</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.metal_treatment') }}</h2>
-            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.weld_seam_cleaning') }}</p>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.metal_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($metalMedia->count() > 0)
@@ -513,10 +510,9 @@
     <section id="contact" class="py-20 section-gradient-2">
         <div class="max-w-7xl mx-auto">
             <div class="text-center fade-in-up mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-8">
                     <span class="brand-heading">{{ __('messages.get_in_touch') }}</span>
                 </h2>
-                <p class="text-xl" style="color: var(--text-ocean);">{{ __('messages.contact_subtitle') }}</p>
             </div>
             <div class="fade-in-up" style="animation-delay: 0.2s">
                 <h3 class="text-2xl font-bold mb-6" style="color: var(--ocean-blue);">{{ __('messages.get_quote') }}</h3>

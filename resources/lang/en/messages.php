@@ -20,6 +20,9 @@ return [
     'oxidation' => 'Oxidation',
     'biofilm' => 'Biofilm',
     'paint_coatings' => 'Paint & Coatings',
+    'wood_restoration' => 'Wood Cleaning',
+    'stone_restoration' => 'Stone Cleaning',
+    'metal_restoration' => 'Metal Cleaning',
     
     // Before/After Section
     'see_the_difference' => 'SEE THE DIFFERENCE',
@@ -33,7 +36,6 @@ return [
     'deep_rust_elimination' => 'Deep rust elimination',
     'surface_restored' => 'Surface restored',
     'stone_restoration_title' => 'Stone Restoration',
-    'natural_stone_cleaning' => 'Stone cleaning',
     'historic_preservation' => 'Historic preservation',
     'restoration_mastery' => 'Restoration mastery',
     'monument_restoration' => 'Monument restoration',

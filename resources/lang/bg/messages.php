@@ -20,6 +20,9 @@ return [
     'oxidation' => 'Оксидация',
     'biofilm' => 'Биофилм',
     'paint_coatings' => 'Боя и покрития',
+    'wood_restoration' => 'Почистване на дърво',
+    'stone_restoration' => 'Почистване на камък',
+    'metal_restoration' => 'Почистване на метал',
     
     // Before/After Section
     'see_the_difference' => 'ВИЖТЕ РАЗЛИКАТА',
@@ -33,7 +36,6 @@ return [
     'deep_rust_elimination' => 'Дълбоко премахване на ръжда',
     'surface_restored' => 'Повърхността възстановена',
     'stone_restoration_title' => 'Възстановяване на камък',
-    'natural_stone_cleaning' => 'Почистване на камък',
     'historic_preservation' => 'Запазване на историята',
     'restoration_mastery' => 'Майсторство на възстановяването',
     'monument_restoration' => 'Реставрация на паметници',
@@ -66,7 +68,6 @@ return [
     'instant_results' => 'Моментални резултати',
     
     'metal_treatment' => 'Метална обработка',
-    'weld_seam_cleaning' => 'Почистване на заваръчни шевове',
     'oxidation_removal' => 'Премахване на оксидация',
     'surface_preparation' => 'Подготовка на повърхности',
     'no_chemical_use' => 'Без химическа употреба',
@@ -80,10 +81,8 @@ return [
     'historic_preservation_service' => 'Запазване на историята',
     
     'surface_prep' => 'Подготовка на повърхности',
-    'paint_removal' => 'Премахване на боя',
     'lacquer_stripping' => 'Отстраняване на лак',
     'primer_removal' => 'Премахване на грунд',
-    'wood_restoration' => 'Възстановяване на дърво',
     'metal_preparation' => 'Подготовка на метал',
     
     // Benefits Section
@@ -191,6 +190,5 @@ return [
     'all_rights_reserved' => 'Всички права запазени',
     'precision_laser_cleaning' => 'Прецизно лазерно почистване',
     'varna_bulgaria' => 'Варна, България',
-    'stone_granite_marble' => 'Камък, Гранит, Мрамор',
     'view_project' => 'Виж проекта'
 ];

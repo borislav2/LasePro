@@ -27,12 +27,9 @@
         </div>
 
         <div class="text-center mb-12">
-            <h1 class="tech-font text-4xl md:text-5xl font-bold text-[var(--ocean-blue)] mb-4">
+            <h1 class="tech-font text-4xl md:text-5xl font-bold text-[var(--ocean-blue)] mb-8">
                 {{ __('messages.gallery_heading') ?? 'Our Work Gallery' }}
             </h1>
-            <p class="text-lg text-cyan-700 max-w-2xl mx-auto">
-                {{ __('messages.gallery_subtitle') ?? 'Explore our laser cleaning results on wood, stone, and metal surfaces.' }}
-            </p>
         </div>
 
         <!-- Filter Tabs -->
