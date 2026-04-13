@@ -16,6 +16,16 @@
 <div class="min-h-screen bg-gradient-to-b from-[var(--soft-sky)] to-[var(--aqua-light)] py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        <!-- Back Button -->
+        <div class="mb-8">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 hover:bg-white text-cyan-700 font-medium transition-all duration-300 shadow-sm hover:shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                {{ __('messages.back_home') ?? 'Back to Home' }}
+            </a>
+        </div>
+
         <div class="text-center mb-12">
             <h1 class="tech-font text-4xl md:text-5xl font-bold text-[var(--ocean-blue)] mb-4">
                 {{ __('messages.gallery_heading') ?? 'Our Work Gallery' }}

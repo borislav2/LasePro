@@ -7,6 +7,7 @@ return [
     'how_it_works' => 'How It Works',
     'contact' => 'Contact',
     'book_now' => 'BOOK NOW',
+    'back_home' => 'Back to Home',
     
     // Hero
     'hero_title' => 'LASER CLEANING',

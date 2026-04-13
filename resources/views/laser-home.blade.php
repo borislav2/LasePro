@@ -502,9 +502,9 @@
             </div>
 
             <div class="text-center mt-12">
-                <button class="laser-btn px-8 py-4 rounded-full text-lg">
+                <a href="{{ route('gallery') }}" class="laser-btn px-8 py-4 rounded-full text-lg inline-block">
                     {{ __('messages.gallery_title') }}
-                </button>
+                </a>
             </div>
         </div>
     </section>
