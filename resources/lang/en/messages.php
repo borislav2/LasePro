@@ -129,8 +129,23 @@ return [
     // Gallery
     'gallery_title' => 'GALLERY',
     'gallery_subtitle' => 'See the transformation with your own eyes',
+    'gallery_heading' => 'Our Work Gallery',
     'virtual_cleaner' => 'Virtual Cleaner',
     'hover_to_clean' => 'Hover over image to clean it',
+    'view_gallery' => 'View Gallery',
+    'all' => 'All',
+    'wood' => 'Wood',
+    'stone' => 'Stone',
+    'metal' => 'Metal',
+    'all_types' => 'All Types',
+    'images' => 'Images',
+    'videos' => 'Videos',
+    'featured_work' => 'Featured Work',
+    'no_media_found' => 'No media found',
+    'try_different_filter' => 'Try selecting a different category or type.',
+    'ready_to_transform' => 'Ready to Transform Your Surfaces?',
+    'get_quote_cta' => 'Get a free quote for your laser cleaning project. We handle wood, stone, and metal surfaces.',
+    'get_free_quote' => 'Get Free Quote',
     
     // Contact
     'get_in_touch' => 'GET IN TOUCH',

@@ -12,11 +12,26 @@ use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicResourceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\MediaController;
+use App\Models\Media;
 
 // Home page - Laser Cleaning Website
 Route::get('/', function () {
-    return view('laser-home');
+    $woodMedia = Media::published()->byCategory('wood')->featured()->ordered()->limit(4)->get();
+    $stoneMedia = Media::published()->byCategory('stone')->featured()->ordered()->limit(4)->get();
+    $metalMedia = Media::published()->byCategory('metal')->featured()->ordered()->limit(4)->get();
+    
+    return view('laser-home', compact('woodMedia', 'stoneMedia', 'metalMedia'));
 })->name('home');
+
+// Gallery Routes
+Route::get('/gallery', [MediaController::class, 'gallery'])->name('gallery');
+Route::get('/gallery/{category}', [MediaController::class, 'byCategory'])->name('gallery.category');
+
+// Admin Media Routes
+Route::middleware('auth')->group(function () {
+    Route::resource('media', MediaController::class);
+});
 
 // Language switch
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

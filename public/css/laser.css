@@ -482,7 +482,7 @@
 
 /* Tech Font - Fresh Theme */
 .tech-font, .logo-text {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Orbitron', 'Exo 2', 'Montserrat', monospace;
     color: var(--ocean-blue) !important;
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
     letter-spacing: 0.02em;
@@ -490,7 +490,7 @@
 
 /* Headings - Fresh Theme */
 .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Montserrat', sans-serif;
     font-weight: 700;
     color: var(--text-dark) !important;
     -webkit-text-fill-color: var(--text-dark) !important;
@@ -499,7 +499,7 @@
 
 /* Paragraphs - Fresh Theme */
 .text-xl, .text-2xl, .text-lg, .text-base {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Montserrat', sans-serif;
     color: var(--text-ocean) !important;
     -webkit-text-fill-color: var(--text-ocean) !important;
     line-height: 1.6;

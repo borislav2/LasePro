@@ -6,7 +6,7 @@
     <title>Lase Pro - Precision Laser Cleaning | Varna, Bulgaria</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/laser.css') }}">
     @livewireStyles
     <style>
@@ -28,7 +28,7 @@
         }
         
         .tech-font {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Orbitron', 'Exo 2', 'Montserrat', monospace;
             
         }
         .brand-heading {
@@ -112,112 +112,159 @@
 </head>
 <body class="text-[var(--text-body)] overflow-x-hidden px-0">
     
-    <!-- Loading Screen with Laser Removal Effect -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo flex flex-col items-center justify-center">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-20 w-auto rounded-lg animate-pulse">
-                <div class="tech-font text-3xl font-bold mt-4" style="color: var(--cyan-blue);">LASE PRO</div>
-            </div>
-            <div class="loading-spinner">
-                <div class="laser-loader"></div>
-            </div>
-            <p class="loading-text">{{ __('messages.loading_videos') }}</p>
-            <div class="loading-progress">
-                <div class="loading-bar" id="loading-bar"></div>
-            </div>
-        </div>
-        <!-- Laser beam that will slice the screen -->
-        <div class="laser-cutter" id="laser-cutter"></div>
-        <!-- Glowing cut line -->
-        <div class="cut-line" id="cut-line"></div>
-        <!-- Laser flash effect -->
-        <div class="laser-flash" id="laser-flash"></div>
-        <!-- Heat haze distortion -->
-        <div class="heat-haze" id="heat-haze"></div>
-        <!-- Sparks container -->
-        <div class="sparks-container" id="sparks-container">
-            <div class="spark"></div>
-            <div class="spark"></div>
-            <div class="spark"></div>
-            <div class="spark"></div>
-        </div>
-        <!-- Smoke effect -->
-        <div class="smoke" id="smoke"></div>
-        <!-- Screen halves for the split effect -->
-        <div class="screen-half screen-top" id="screen-top"></div>
-        <div class="screen-half screen-bottom" id="screen-bottom"></div>
-    </div>
+  
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full nav-theme backdrop-blur-md z-50 transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-0">
-            <div class="flex justify-between items-center h-16">
-                <div class="nav-logo-container">
-                    <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-10 w-auto rounded-lg">
-                    <div class="tech-font text-2xl font-bold logo-text">LASE PRO</div>
-                </div>
-                <!-- Desktop: Full phone/email -->
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="tel:+359886548030" class="flex items-center space-x-2 text-cyan-700 hover:text-cyan-500 transition-colors font-medium">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                        <span>+359 886 548 030</span>
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center h-16">
+                <!-- Mobile: All items on left -->
+                <div class="flex md:hidden items-center space-x-2 w-full">
+                    <!-- Logo -->
+                    <div class="nav-logo-container flex-shrink-0">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-7 w-auto rounded-lg">
+                    </div>
+                    <!-- Phone icon -->
+                    <a href="tel:+359886548030" class="w-8 h-8 rounded-full flex items-center justify-center bg-cyan-500/20 text-cyan-600 hover:bg-cyan-500 hover:text-white transition-all flex-shrink-0">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                     </a>
-                    <a href="mailto:lase.pro.bg@gmail.com" class="flex items-center space-x-2 text-cyan-700 hover:text-cyan-500 transition-colors font-medium">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span>lase.pro.bg@gmail.com</span>
+                    <!-- Email icon -->
+                    <a href="mailto:lase.pro.bg@gmail.com" class="w-8 h-8 rounded-full flex items-center justify-center bg-cyan-500/20 text-cyan-600 hover:bg-cyan-500 hover:text-white transition-all flex-shrink-0">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                     </a>
-                </div>
-                <!-- Mobile: Icons only -->
-                <div class="flex md:hidden items-center space-x-3">
-                    <a href="tel:+359886548030" class="w-10 h-10 rounded-full flex items-center justify-center bg-cyan-500/20 text-cyan-600 hover:bg-cyan-500 hover:text-white transition-all">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <!-- Theme Toggle -->
-                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <!-- Theme Toggle Mobile -->
+                    <button id="theme-toggle-mobile" class="theme-toggle flex-shrink-0" style="transform: scale(0.8);" aria-label="Toggle dark mode">
                         <span class="theme-toggle-icon sun">☀️</span>
                         <span class="theme-toggle-icon moon">🌙</span>
                     </button>
-                    
-                    <!-- Language Switcher -->
-                    <div class="flex space-x-2">
+                    <!-- Language Switcher Mobile -->
+                    <div class="flex space-x-1 flex-shrink-0">
                         <a href="{{ route('language.switch', 'bg') }}" 
-                           class="px-3 py-1 rounded-full text-sm font-medium {{ app()->getLocale() === 'bg' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
+                           class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-medium {{ app()->getLocale() === 'bg' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
                             BG
                         </a>
                         <a href="{{ route('language.switch', 'en') }}" 
-                           class="px-3 py-1 rounded-full text-sm font-medium {{ app()->getLocale() === 'en' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
+                           class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-medium {{ app()->getLocale() === 'en' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
                             EN
                         </a>
                     </div>
-
+                </div>
+                
+                <!-- Desktop: Logo on left, controls on right -->
+                <div class="hidden md:flex items-center justify-between w-full">
+                    <!-- Logo -->
+                    <div class="nav-logo-container">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-10 w-auto rounded-lg">
+                        <div class="tech-font text-2xl font-bold logo-text">LASE PRO</div>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="flex items-center space-x-6">
+                        <a href="tel:+359886548030" class="flex items-center space-x-2 text-cyan-700 hover:text-cyan-500 transition-colors font-medium">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            <span>+359 886 548 030</span>
+                        </a>
+                        <a href="mailto:lase.pro.bg@gmail.com" class="flex items-center space-x-2 text-cyan-700 hover:text-cyan-500 transition-colors font-medium">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <span>lase.pro.bg@gmail.com</span>
+                        </a>
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                            <span class="theme-toggle-icon sun">☀️</span>
+                            <span class="theme-toggle-icon moon">🌙</span>
+                        </button>
+                        <!-- Language Switcher -->
+                        <div class="flex space-x-2">
+                            <a href="{{ route('language.switch', 'bg') }}" 
+                               class="px-3 py-1 rounded-full text-sm font-medium {{ app()->getLocale() === 'bg' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
+                                BG
+                            </a>
+                            <a href="{{ route('language.switch', 'en') }}" 
+                               class="px-3 py-1 rounded-full text-sm font-medium {{ app()->getLocale() === 'en' ? 'bg-cyan-500 text-white' : 'border border-cyan-400 text-cyan-700 hover:border-cyan-500' }} transition-all">
+                                EN
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center hero-bg overflow-hidden">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="{{ asset('images/introvideo.mp4') }}" type="video/mp4">
+        </video>
+        <!-- Overlay to fade video text at bottom -->
+        <div class="hero-overlay"></div>
+        <!-- Particles -->
+        <div id="particles" class="absolute inset-0 pointer-events-none z-[2]"></div>
+        <div class="laser-beam-container absolute inset-0 z-[2]">
+            <div class="laser-beam"></div>
+            <div class="laser-beam"></div>
+        </div>
+        <!-- Hero Content -->
+        <div class="max-w-7xl mx-auto text-center relative z-10 pt-20">
+            <div class="fade-in-up">
+               
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tech-font">
+                 <span class="block brand-heading">{{ __('messages.hero_title') }}</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed" style="color: var(--text-ocean);">
+                    {{ __('messages.hero_description') }}
+                </p>
+                
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 rounded-full flex justify-center" style="border-color: var(--cyan-blue);">
+                <div class="w-1 h-3 rounded-full mt-2 animate-pulse" style="background: var(--cyan-blue);"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- WOOD Section - Fullscreen -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden" id="wood">
         <!-- Video Background -->
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="{{ asset('images/IMG_2945.mp4') }}" type="video/mp4">
+            <source src="{{ asset('images/wood1.mp4') }}" type="video/mp4">
         </video>
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🪵</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.wood_restoration') }}</h2>
             <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.paint_removal') }}</p>
+            
+            <!-- Featured Media Preview -->
+            @if($woodMedia->count() > 0)
+            <div class="flex justify-center gap-4 mb-8">
+                @foreach($woodMedia->take(3) as $media)
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden border-2 border-white/50 shadow-lg">
+                    @if($media->isVideo())
+                        <video class="w-full h-full object-cover" muted loop>
+                            <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                        </video>
+                    @else
+                        <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @endif
+            
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="openGallery('wood', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                <a href="{{ route('gallery', ['category' => 'wood']) }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    {{ __('messages.gallery') }}
-                </button>
-                <button onclick="openGallery('wood', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    {{ __('messages.videos') }}
-                </button>
+                    {{ __('messages.view_gallery') ?? 'View Gallery' }}
+                </a>
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    {{ __('messages.get_quote') ?? 'Get Quote' }}
+                </a>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -237,15 +284,33 @@
             <div class="text-6xl mb-4">🏛️</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.natural_stone_cleaning') }}</h2>
             <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.stone_granite_marble') }}</p>
+            
+            <!-- Featured Media Preview -->
+            @if($stoneMedia->count() > 0)
+            <div class="flex justify-center gap-4 mb-8">
+                @foreach($stoneMedia->take(3) as $media)
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden border-2 border-white/50 shadow-lg">
+                    @if($media->isVideo())
+                        <video class="w-full h-full object-cover" muted loop>
+                            <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                        </video>
+                    @else
+                        <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @endif
+            
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="openGallery('stone', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                <a href="{{ route('gallery', ['category' => 'stone']) }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    {{ __('messages.gallery') }}
-                </button>
-                <button onclick="openGallery('stone', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    {{ __('messages.videos') }}
-                </button>
+                    {{ __('messages.view_gallery') ?? 'View Gallery' }}
+                </a>
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    {{ __('messages.get_quote') ?? 'Get Quote' }}
+                </a>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -264,135 +329,40 @@
             <div class="text-6xl mb-4">⚙️</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-4">{{ __('messages.metal_treatment') }}</h2>
             <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">{{ __('messages.weld_seam_cleaning') }}</p>
+            
+            <!-- Featured Media Preview -->
+            @if($metalMedia->count() > 0)
+            <div class="flex justify-center gap-4 mb-8">
+                @foreach($metalMedia->take(3) as $media)
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden border-2 border-white/50 shadow-lg">
+                    @if($media->isVideo())
+                        <video class="w-full h-full object-cover" muted loop>
+                            <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                        </video>
+                    @else
+                        <img src="{{ asset('storage/' . $media->file_path) }}" alt="{{ $media->title }}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @endif
+            
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="openGallery('metal', 'images')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
+                <a href="{{ route('gallery', ['category' => 'metal']) }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-cyan-400 text-cyan-900 hover:bg-cyan-300 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    {{ __('messages.gallery') }}
-                </button>
-                <button onclick="openGallery('metal', 'videos')" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    {{ __('messages.videos') }}
-                </button>
+                    {{ __('messages.view_gallery') ?? 'View Gallery' }}
+                </a>
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    {{ __('messages.get_quote') ?? 'Get Quote' }}
+                </a>
             </div>
         </div>
     </section>
 
     <!-- New Gallery Section with Tabs -->
-    <section id="gallery-section" class="py-20 section-gradient-1">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-4" style="color: var(--text-body);">{{ __('messages.our_works') }}</h2>
-                
-                <!-- Material Tabs -->
-                <div class="flex flex-wrap justify-center gap-2 mb-6" id="material-tabs">
-                    <button class="gallery-tab active px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('wood')" data-material="wood">{{ __('messages.wood') }}</button>
-                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('stone')" data-material="stone">{{ __('messages.stone') }}</button>
-                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchMaterial('metal')" data-material="metal">{{ __('messages.metal') }}</button>
-                </div>
-                
-                <!-- Type Tabs -->
-                <div class="flex justify-center gap-2" id="type-tabs">
-                    <button class="gallery-tab active px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchType('images')" data-type="images">{{ __('messages.photos') }}</button>
-                    <button class="gallery-tab px-6 py-2 rounded-full border-2 border-cyan-400 font-semibold transition-all" onclick="switchType('videos')" data-type="videos">{{ __('messages.videos') }}</button>
-                </div>
-            </div>
-            
-            <!-- Gallery Content -->
-            <div id="gallery-content" class="min-h-[400px]">
-                <!-- Wood Images -->
-                <div id="wood-images" class="gallery-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/wood3.png') }}" alt="Wood work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/viber_image_2026-03-24_00-31-15-815.jpg') }}" alt="Wood work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                </div>
-                
-                <!-- Wood Videos -->
-                <div id="wood-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/wood1.MOV') }}" type="video/quicktime">
-                        </video>
-                    </div>
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/wood2.mov') }}" type="video/quicktime">
-                        </video>
-                    </div>
-                </div>
-                
-                <!-- Stone Images -->
-                <div id="stone-images" class="gallery-content hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/1774304238932155.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/1774304515818586.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/1774304544768486.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/1774304579347529.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/1774304653801954.jpg') }}" alt="Stone work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                </div>
-                
-                <!-- Stone Videos -->
-                <div id="stone-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-                
-                <!-- Metal Images -->
-                <div id="metal-images" class="gallery-content hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/metal3.png') }}" alt="Metal work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                    <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img src="{{ asset('images/viber_image_2026-03-24_00-31-16-252.jpg') }}" alt="Metal work" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
-                    </div>
-                </div>
-                
-                <!-- Metal Videos -->
-                <div id="metal-videos" class="gallery-content hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/metal1.MOV') }}" type="video/quicktime">
-                        </video>
-                    </div>
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/metal2.mov') }}" type="video/quicktime">
-                        </video>
-                    </div>
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/0-02-05-09ad9d5c51bae851cb4bd32ac4dd7e6183ba6dc255a3faf05eec24ebd3a42e04_dadf0975ec81556.mp4') }}" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-900">
-                        <video controls class="w-full h-full object-cover">
-                            <source src="{{ asset('images/0-02-05-81a2c377d0eeb74a93ec0362ae579153d67cbfe09835b4400df50991cda73098_867459268cdac9b3.mp4') }}" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   
 
-    <style>
-        .gallery-tab { background: transparent; color: var(--text-body); }
-        .gallery-tab.active { background: #22d3ee; color: white; border-color: #22d3ee; }
-        .gallery-tab:hover:not(.active) { background: rgba(34, 211, 238, 0.1); }
-    </style>
 
     <script>
         // Gallery State
@@ -450,151 +420,6 @@
         // Initialize
         showGalleryContent();
     </script>
-
-    <!-- Industrial Cleaning Section with Video -->
-     <section id="industrial-cleaning" class="py-20 section-gradient-1">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/video4.mp4') }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-l from-[var(--soft-sky)]/50 to-transparent"></div>
-            </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">🏭</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">Industrial Cleaning</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    Heavy machinery & equipment restoration<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">Factory-grade precision</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Production line cleaning</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Heavy machinery maintenance</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Factory floor preparation</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Zero production downtime</span>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Automotive Cleaning Section with Video -->
-    <section id="automotive-cleaning" class="py-20 section-gradient-2">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/video5.mp4') }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-r from-[var(--soft-sky)]/50 to-transparent"></div>
-            </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">🚗</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">Automotive Restoration</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    Classic car & chassis restoration<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">Detailing excellence</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Chassis frame restoration</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Engine bay cleaning</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Classic car body prep</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Parts refinishing ready</span>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Graffiti Removal Section with Video -->
-    <section id="graffiti-removal" class="py-20 section-gradient-1">
-        <div class="max-w-4xl mx-auto">
-            <!-- Video Background -->
-            <div class="relative h-[400px] md:h-[550px] rounded-2xl overflow-hidden professional-border shadow-xl transition-shadow duration-300 mb-10" style="box-shadow: var(--fresh-shadow);">
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src="{{ asset('images/video6.mp4') }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-l from-[var(--soft-sky)]/50 to-transparent"></div>
-            </div>
-            <!-- Content -->
-            <div class="text-center fade-in-up px-4">
-                <div class="text-5xl mb-4">🎨</div>
-                <h2 class="text-4xl md:text-5xl font-bold tech-font mb-6">
-                    <span class="brand-heading">Graffiti Removal</span>
-                </h2>
-                <p class="text-xl text-[var(--text-ocean)] mb-8 leading-relaxed">
-                    Complete paint & coating removal<br>
-                    <span class="font-semibold" style="color: var(--sky-blue);">Surface protection guaranteed</span>
-                </p>
-                <div class="space-y-4 text-left max-w-md mx-auto">
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">All paint types removed</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Spray paint elimination</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">Building facade cleaning</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-[var(--sky-blue)] mr-3 text-xl">✓</span>
-                        <span style="color: var(--text-ocean);">No surface etching</span>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="#contact" class="professional-btn px-8 py-4 rounded-full text-lg">
-                        {{ __('messages.get_quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
     <!-- Gallery Preview -->
     <section id="gallery" class="py-20 section-gradient-1">
         <div class="max-w-7xl mx-auto">
@@ -775,6 +600,8 @@
         // Generate floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
             for (let i = 0; i < 20; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'laser-particle';
@@ -901,19 +728,30 @@
         // Theme Toggle functionality
         function initThemeToggle() {
             const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
             const html = document.documentElement;
             
             // Check for saved theme preference or default to 'light'
             const savedTheme = localStorage.getItem('theme') || 'light';
             html.setAttribute('data-theme', savedTheme);
             
-            themeToggle.addEventListener('click', () => {
+            function toggleTheme() {
                 const currentTheme = html.getAttribute('data-theme');
                 const newTheme = currentTheme === 'light' ? 'dark' : 'light';
                 
                 html.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
-            });
+            }
+            
+            // Desktop theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+            
+            // Mobile theme toggle
+            if (themeToggleMobile) {
+                themeToggleMobile.addEventListener('click', toggleTheme);
+            }
         }
 
         // Initialize everything
@@ -924,113 +762,8 @@
             initThemeToggle();
             handleScroll();
             window.addEventListener('scroll', handleScroll);
-            
-            // Start video loading check
-            initLoadingScreen();
         });
-
-        // Loading Screen with Laser Removal
-        function initLoadingScreen() {
-            const videos = document.querySelectorAll('video');
-            const loadingScreen = document.getElementById('loading-screen');
-            const loadingBar = document.getElementById('loading-bar');
-            const laserCutter = document.getElementById('laser-cutter');
-            const screenTop = document.getElementById('screen-top');
-            const screenBottom = document.getElementById('screen-bottom');
             
-            let videosLoaded = 0;
-            const totalVideos = videos.length;
-            let minLoadTime = 3000; // Minimum 3 seconds to show loading screen
-            let startTime = Date.now();
-            
-            function updateProgress() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(100, ((videosLoaded / totalVideos) * 80) + ((elapsed / minLoadTime) * 20));
-                loadingBar.style.width = progress + '%';
-                
-                if (videosLoaded >= totalVideos && elapsed >= minLoadTime) {
-                    setTimeout(removeLoadingScreen, 300);
-                } else if (videosLoaded >= totalVideos) {
-                    setTimeout(() => updateProgress(), 100);
-                }
-            }
-            
-            function removeLoadingScreen() {
-                const cutLine = document.getElementById('cut-line');
-                const laserFlash = document.getElementById('laser-flash');
-                const heatHaze = document.getElementById('heat-haze');
-                const sparksContainer = document.getElementById('sparks-container');
-                const smoke = document.getElementById('smoke');
-                
-                // Activate heat haze first
-                heatHaze.classList.add('active');
-                
-                // Start the laser cutter
-                setTimeout(() => {
-                    laserCutter.classList.add('active');
-                    cutLine.classList.add('active');
-                }, 100);
-                
-                // Flash when laser hits center
-                setTimeout(() => {
-                    laserFlash.classList.add('active');
-                    sparksContainer.classList.add('active');
-                    smoke.classList.add('active');
-                }, 500);
-                
-                // Split the screen after laser passes
-                setTimeout(() => {
-                    screenTop.classList.add('split');
-                    screenBottom.classList.add('split');
-                }, 900);
-                
-                // Fade out laser and effects
-                setTimeout(() => {
-                    laserCutter.classList.add('fade-out');
-                    sparksContainer.style.opacity = '0';
-                    smoke.style.opacity = '0';
-                }, 1200);
-                
-                // Completely remove loading screen
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }, 500);
-                }, 1800);
-            }
-            
-            // Monitor video loading
-            videos.forEach(video => {
-                if (video.readyState >= 3) {
-                    videosLoaded++;
-                    updateProgress();
-                } else {
-                    video.addEventListener('canplaythrough', () => {
-                        videosLoaded++;
-                        updateProgress();
-                    }, { once: true });
-                    
-                    video.addEventListener('error', () => {
-                        videosLoaded++;
-                        updateProgress();
-                    }, { once: true });
-                }
-            });
-            
-            // Fallback: remove after 5 seconds max
-            setTimeout(() => {
-                if (loadingScreen.style.display !== 'none') {
-                    videosLoaded = totalVideos;
-                    updateProgress();
-                }
-            }, 5000);
-            
-            // Prevent scrolling while loading
-            document.body.style.overflow = 'hidden';
-        }
-
         // Add CSS animation for random lasers
         const style = document.createElement('style');
         style.textContent = `
