@@ -11,9 +11,16 @@ class MediaController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request)
     {
-        $media = Media::published()->ordered()->paginate(20);
+        $query = Media::ordered();
+
+        // Filter by category if provided
+        if ($request->has('category') && in_array($request->category, ['wood', 'stone', 'metal'])) {
+            $query->byCategory($request->category);
+        }
+
+        $media = $query->paginate(20);
         return view('media.index', compact('media'));
     }
 

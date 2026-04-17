@@ -62,7 +62,7 @@ class Media extends Model
 
     public function getFileUrlAttribute()
     {
-        return asset('storage/' . $this->file_path);
+        return asset('images/media/' . basename($this->file_path));
     }
 
     public function isVideo()

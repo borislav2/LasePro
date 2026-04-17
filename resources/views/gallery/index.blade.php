@@ -68,74 +68,36 @@
             </a>
         </div>
 
-        @if($featuredMedia->count() > 0 && !$category && !$type)
-        <!-- Featured Section -->
-        <div class="mb-12">
-            <h2 class="tech-font text-2xl font-bold text-[var(--ocean-blue)] mb-6 text-center">
-                {{ __('messages.featured_work') ?? 'Featured Work' }}
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($featuredMedia as $item)
-                <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500">
-                    @if($item->isVideo())
-                        <video class="w-full h-64 object-cover" controls poster="{{ asset('storage/' . $item->file_path) }}">
-                            <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
-                        </video>
-                        <div class="absolute top-3 right-3 bg-red-500 text-white p-2 rounded-full">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                    @else
-                        <img src="{{ asset('storage/' . $item->file_path) }}" alt="{{ $item->title }}" 
-                             class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    @endif
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="absolute bottom-0 left-0 right-0 p-4">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 {{ $item->category === 'wood' ? 'bg-amber-500 text-white' : ($item->category === 'stone' ? 'bg-slate-500 text-white' : 'bg-blue-500 text-white') }}">
-                                {{ ucfirst($item->category) }}
-                            </span>
-                            <h3 class="text-white font-semibold text-lg">{{ $item->title }}</h3>
-                            @if($item->description)
-                                <p class="text-white/80 text-sm mt-1">{{ Str::limit($item->description, 100) }}</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        @endif
-
-        <!-- All Media Grid -->
+        <!-- Media Grid -->
         @if($media->count() > 0)
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($media as $item)
-            <div class="group relative overflow-hidden rounded-xl bg-white shadow-md hover:shadow-xl transition-all duration-300">
+            <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="openModal('{{ $item->isVideo() ? 'video' : 'image' }}', '{{ asset($item->file_path) }}', '{{ $item->title }}')">
                 @if($item->isVideo())
-                    <div class="relative">
-                        <video class="w-full h-48 object-cover" controls>
-                            <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
-                        </video>
-                        <div class="absolute top-2 right-2 bg-red-500/90 text-white p-1.5 rounded-full">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <video class="w-full h-64 object-cover" muted playsinline preload="metadata">
+                        <source src="{{ asset($item->file_path) }}" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-all">
+                        <div class="w-14 h-14 bg-red-500/90 text-white rounded-full flex items-center justify-center">
+                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </div>
                     </div>
                 @else
-                    <div class="relative overflow-hidden">
-                        <img src="{{ asset('storage/' . $item->file_path) }}" alt="{{ $item->title }}" 
-                             class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset($item->file_path) }}" alt="{{ $item->title }}"
+                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                        <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                        </svg>
                     </div>
                 @endif
-                <div class="p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $item->category === 'wood' ? 'bg-amber-100 text-amber-700' : ($item->category === 'stone' ? 'bg-slate-100 text-slate-700' : 'bg-blue-100 text-blue-700') }}">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 {{ $item->category === 'wood' ? 'bg-amber-500 text-white' : ($item->category === 'stone' ? 'bg-slate-500 text-white' : 'bg-blue-500 text-white') }}">
                             {{ ucfirst($item->category) }}
                         </span>
-                        <span class="text-xs text-gray-500">{{ $item->isVideo() ? 'Video' : 'Image' }}</span>
+                        <h3 class="text-white font-semibold text-lg">{{ $item->title }}</h3>
                     </div>
-                    <h3 class="font-semibold text-gray-800 line-clamp-2">{{ $item->title }}</h3>
-                    @if($item->description)
-                        <p class="text-gray-600 text-sm mt-1 line-clamp-2">{{ $item->description }}</p>
-                    @endif
                 </div>
             </div>
             @endforeach
@@ -169,5 +131,91 @@
         </div>
     </div>
 </div>
+
+<!-- Modal/Lightbox -->
+<div id="mediaModal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-sm" onclick="closeModal(event)">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="relative inline-block" onclick="event.stopPropagation()">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute -top-10 right-0 text-white hover:text-cyan-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Modal Content - fits image size -->
+            <div id="modalContent" class="relative rounded-lg overflow-hidden shadow-2xl">
+                <!-- Image container -->
+                <div id="imageContainer" class="hidden">
+                    <img id="modalImage" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain">
+                    <!-- Title overlay at bottom -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <h3 id="modalImageTitle" class="text-xl font-semibold text-white"></h3>
+                    </div>
+                </div>
+                <!-- Video container -->
+                <div id="videoContainer" class="hidden">
+                    <video id="modalVideo" class="max-w-[90vw] max-h-[85vh]" controls autoplay>
+                        <source src="" type="video/mp4">
+                    </video>
+                    <!-- Title overlay at bottom for video -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <h3 id="modalVideoTitle" class="text-xl font-semibold text-white"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openModal(type, src, title) {
+    const modal = document.getElementById('mediaModal');
+    const imageContainer = document.getElementById('imageContainer');
+    const videoContainer = document.getElementById('videoContainer');
+    const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalImageTitle = document.getElementById('modalImageTitle');
+    const modalVideoTitle = document.getElementById('modalVideoTitle');
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    if (type === 'image') {
+        imageContainer.classList.remove('hidden');
+        videoContainer.classList.add('hidden');
+        modalImage.src = src;
+        modalImage.alt = title;
+        modalImageTitle.textContent = title;
+    } else {
+        imageContainer.classList.add('hidden');
+        videoContainer.classList.remove('hidden');
+        modalVideo.src = src;
+        modalVideoTitle.textContent = title;
+    }
+}
+
+function closeModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    
+    const modal = document.getElementById('mediaModal');
+    const modalVideo = document.getElementById('modalVideo');
+    
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+    
+    // Stop video when closing
+    if (modalVideo) {
+        modalVideo.pause();
+        modalVideo.src = '';
+    }
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+</script>
+
 </body>
 </html>

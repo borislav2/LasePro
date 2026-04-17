@@ -25,6 +25,8 @@
             -webkit-text-fill-color: var(--text-body) !important;
             background: var(--bg-body) !important;
             transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            max-width: 100vw;
         }
         
         .tech-font {
@@ -70,6 +72,18 @@
             }
             .hero-bg {
                 min-height: 100vh;
+            }
+            /* Prevent horizontal scroll on mobile */
+            body {
+                overflow-x: hidden;
+                touch-action: pan-y;
+            }
+            section {
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+            img, video {
+                max-width: 100%;
             }
         }
         .hero-overlay {
@@ -230,10 +244,10 @@
     <!-- WOOD Section - Fullscreen -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden" id="wood">
         <!-- Video Background -->
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 20%;">
             <source src="{{ asset('images/wood1.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🪵</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.wood_restoration') }}</h2>
@@ -275,10 +289,10 @@
     <!-- STONE Section - Fullscreen -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden" id="stone">
         <!-- Video Background -->
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 30%;">
             <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🏛️</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.stone_restoration') }}</h2>
@@ -319,10 +333,10 @@
     <!-- METAL Section - Fullscreen -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden" id="metal">
         <!-- Video Background -->
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="{{ asset('images/0-02-05-ec5e4a233a114682bb1975ce54ef60b40c89ae6a015002ecf865918dd516a592_cd1975d9abc04f06.mp4') }}" type="video/mp4">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 25%;">
+            <source src="{{ asset('images/metalvideo2.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">⚙️</div>
             <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.metal_restoration') }}</h2>
@@ -424,61 +438,29 @@
                 <h2 class="text-4xl md:text-5xl font-bold tech-font mb-4">
                     <span style="color: var(--ocean-blue);">{{ __('messages.gallery_title') }}</span>
                 </h2>
-                <p class="text-xl" style="color: var(--text-ocean);">{{ __('messages.gallery_subtitle') }}</p>
             </div>
 
             <div class="masonry-grid">
                 <!-- Gallery Item 1 -->
                 <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.1s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/viber_image_2026-03-24_00-31-15-815.jpg') }}" alt="Laser cleaning project 1" class="w-full rounded-lg gallery-img">
+                    <img src="{{ asset('images/stoneg.jpg') }}" alt="Laser cleaning project 1" class="w-full rounded-lg gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
                     </div>
                 </div>
                 <!-- Gallery Item 2 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.2s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/viber_image_2026-03-24_00-31-16-252.jpg') }}" alt="Laser cleaning project 2" class="w-full rounded-lg gallery-img">
+                 <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.2s" onclick="openLightbox(this)">
+                    <img src="{{ asset('images/stone.jpg') }}" alt="Laser cleaning project 7" class="w-full rounded-lg gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
                     </div>
                 </div>
+              
                 <!-- Gallery Item 3 -->
                 <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.3s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/1774304653801954.jpg') }}" alt="Laser cleaning project 3" class="w-full rounded-lg gallery-img">
-                    <div class="gallery-overlay">
-                        <div class="gallery-icon">🔍</div>
-                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
-                    </div>
-                </div>
-                <!-- Gallery Item 4 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.4s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/1774304579347529.jpg') }}" alt="Laser cleaning project 4" class="w-full rounded-lg gallery-img">
-                    <div class="gallery-overlay">
-                        <div class="gallery-icon">🔍</div>
-                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
-                    </div>
-                </div>
-                <!-- Gallery Item 5 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.5s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/1774304544768486.jpg') }}" alt="Laser cleaning project 5" class="w-full rounded-lg gallery-img">
-                    <div class="gallery-overlay">
-                        <div class="gallery-icon">🔍</div>
-                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
-                    </div>
-                </div>
-                <!-- Gallery Item 6 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.6s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/1774304515818586.jpg') }}" alt="Laser cleaning project 6" class="w-full rounded-lg gallery-img">
-                    <div class="gallery-overlay">
-                        <div class="gallery-icon">🔍</div>
-                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
-                    </div>
-                </div>
-                <!-- Gallery Item 7 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.7s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/1774304238932155.jpg') }}" alt="Laser cleaning project 7" class="w-full rounded-lg gallery-img">
+                    <img src="{{ asset('images/metal1.jpg') }}" alt="Laser cleaning project 3" class="w-full rounded-lg gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
