@@ -47,10 +47,8 @@ class MediaResource extends Resource
                                 'video' => 'Video',
                             ])
                             ->required()
-                            ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, $state) {
-                                $set('file_path', null);
-                            }),
+                            ->disabled()
+                            ->helperText('Auto-detected from uploaded file')
                     ])
                     ->columns(2),
                 
@@ -63,21 +61,20 @@ class MediaResource extends Resource
                             ->reactive()
                             ->disk('public_root')
                             ->directory('images/media')
-                            ->acceptedFileTypes(function (Forms\Get $get) {
-                                $type = $get('type');
-                                return $type === 'video'
-                                    ? ['video/mp4', 'video/quicktime', 'video/mov', 'video/avi', 'video/webm']
-                                    : ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                            })
-                            ->helperText(function (Forms\Get $get) {
-                                $type = $get('type');
-                                return $type === 'video'
-                                    ? 'Accepted formats: MP4, MOV, AVI, WebM (Max 50MB)'
-                                    : 'Accepted formats: JPG, PNG, GIF, WebP (Max 50MB)';
-                            })
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime', 'video/mov', 'video/avi', 'video/webm'])
+                            ->helperText('Accepted formats: JPG, PNG, GIF, WebP, MP4, MOV, AVI, WebM (Max 50MB)')
                             ->maxSize(51200) // 50MB
                             ->previewable(true)
-                            ->downloadable(),
+                            ->downloadable()
+                            ->afterStateUpdated(function (Forms\Set $set, $state) {
+                                if (is_array($state) && count($state) > 0) {
+                                    $file = $state[0];
+                                    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                                    $videoExtensions = ['mp4', 'mov', 'avi', 'webm', 'qt', 'mkv'];
+                                    $type = in_array($extension, $videoExtensions) ? 'video' : 'image';
+                                    $set('type', $type);
+                                }
+                            }),
                     ]),
                 
                 Forms\Components\Section::make('Display Settings')
