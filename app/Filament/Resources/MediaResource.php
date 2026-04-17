@@ -70,8 +70,7 @@ class MediaResource extends Resource
                             })
                             ->maxSize(51200) // 50MB
                             ->previewable(true)
-                            ->downloadable()
-                            ->storeFileNamesIn('original_filename'),
+                            ->downloadable(),
                     ]),
                 
                 Forms\Components\Section::make('Display Settings')
