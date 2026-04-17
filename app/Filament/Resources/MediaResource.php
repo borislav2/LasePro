@@ -60,13 +60,20 @@ class MediaResource extends Resource
                             ->label('Upload File')
                             ->required()
                             ->live()
+                            ->reactive()
                             ->disk('public_root')
                             ->directory('images/media')
                             ->acceptedFileTypes(function (Forms\Get $get) {
                                 $type = $get('type');
                                 return $type === 'video'
-                                    ? ['video/mp4', 'video/quicktime', 'video/mov']
+                                    ? ['video/mp4', 'video/quicktime', 'video/mov', 'video/avi', 'video/webm']
                                     : ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                            })
+                            ->helperText(function (Forms\Get $get) {
+                                $type = $get('type');
+                                return $type === 'video'
+                                    ? 'Accepted formats: MP4, MOV, AVI, WebM (Max 50MB)'
+                                    : 'Accepted formats: JPG, PNG, GIF, WebP (Max 50MB)';
                             })
                             ->maxSize(51200) // 50MB
                             ->previewable(true)
