@@ -108,6 +108,35 @@
             -webkit-background-clip: unset !important;
             background-clip: unset !important;
         }
+        .logo-wordmark {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            line-height: 1;
+        }
+        .logo-wordmark-lase {
+            color: var(--ocean-blue) !important;
+            -webkit-text-fill-color: var(--ocean-blue) !important;
+            text-shadow: 0 0 24px rgba(14, 165, 233, 0.35);
+        }
+        .logo-wordmark-pro {
+            color: var(--laser-red) !important;
+            -webkit-text-fill-color: var(--laser-red) !important;
+            text-shadow: 0 0 24px var(--laser-red-glow);
+            margin-left: 0.12em;
+            position: relative;
+        }
+        .logo-wordmark-pro::after {
+            content: '';
+            position: absolute;
+            left: 0.1em;
+            right: 0.1em;
+            bottom: -0.22em;
+            height: 2px;
+            background: linear-gradient(90deg, var(--laser-red), transparent);
+            opacity: 0.8;
+        }
         .hero-bg {
             position: relative;
         }
@@ -437,7 +466,7 @@
                     <!-- Logo -->
                     <div class="nav-logo-container">
                         <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-10 w-auto rounded-lg">
-                        <div class="tech-font text-2xl font-bold logo-text">LASE PRO</div>
+                        <div class="tech-font logo-wordmark"><span class="logo-wordmark-lase">LASE</span><span class="logo-wordmark-pro">PRO</span></div>
                     </div>
                     
                     <!-- Controls -->
@@ -972,7 +1001,7 @@
                 <div class="text-center md:text-left">
                     <div class="flex items-center justify-center md:justify-start mb-4">
                         <img src="{{ asset('images/logo.jpg') }}" alt="Lase Pro Logo" class="h-12 w-auto rounded-lg mr-3">
-                        <div class="tech-font text-2xl font-bold" style="color: var(--ocean-blue);">LASE PRO</div>
+                        <div class="tech-font logo-wordmark"><span class="logo-wordmark-lase">LASE</span><span class="logo-wordmark-pro">PRO</span></div>
                     </div>
                     <p class="mb-2" style="color: var(--text-ocean);">{{ __('messages.precision_laser_cleaning') }}</p>
                     <p class="font-semibold" style="color: var(--sky-blue);">{{ __('messages.varna_bulgaria') }}</p>
