@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('messages.gallery_title') ?? 'Gallery - Lase Pro' }}</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}">
+    <title>{{ __('messages.meta_title_gallery') }}</title>
+    <meta name="description" content="{{ __('messages.meta_description_gallery') }}">
+    <link rel="canonical" href="{{ route('gallery') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ route('gallery') }}">
+    <meta property="og:title" content="{{ __('messages.meta_title_gallery') }}">
+    <meta property="og:description" content="{{ __('messages.meta_description_gallery') }}">
+    <meta property="og:image" content="{{ asset('images/icons/icon-512.png') }}">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'bg' ? 'bg_BG' : 'en_US' }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ __('messages.meta_title_gallery') }}">
+    <meta name="twitter:description" content="{{ __('messages.meta_description_gallery') }}">
+    <meta name="twitter:image" content="{{ asset('images/icons/icon-512.png') }}">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/icons/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <meta name="theme-color" content="#0c4a6e">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/laser.css') }}">
     <style>
-        .tech-font { font-family: 'Orbitron', monospace; }
+        body { font-family: 'Inter', sans-serif; }
+        .tech-font { font-family: 'Unbounded', 'Inter', sans-serif; letter-spacing: -0.02em; }
     </style>
 </head>
 <body class="bg-gradient-to-b from-sky-50 to-cyan-50 min-h-screen">
@@ -72,10 +96,10 @@
         @if($media->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($media as $item)
-            <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="openModal('{{ $item->isVideo() ? 'video' : 'image' }}', '{{ asset($item->file_path) }}', '{{ $item->title }}')">
+            <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="openModal('{{ $item->isVideo() ? 'video' : 'image' }}', '{{ asset('storage/' . $item->file_path) }}', '{{ $item->title }}')">
                 @if($item->isVideo())
                     <video class="w-full h-64 object-cover" muted playsinline preload="metadata">
-                        <source src="{{ asset($item->file_path) }}" type="video/mp4">
+                        <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-all">
                         <div class="w-14 h-14 bg-red-500/90 text-white rounded-full flex items-center justify-center">
@@ -83,7 +107,7 @@
                         </div>
                     </div>
                 @else
-                    <img src="{{ asset($item->file_path) }}" alt="{{ $item->title }}"
+                    <img src="{{ asset('storage/' . $item->file_path) }}" alt="{{ $item->title }}"
                          class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
                         <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">

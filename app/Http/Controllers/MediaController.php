@@ -45,18 +45,6 @@ class MediaController extends Controller
         return view('gallery.index', compact('media', 'featuredMedia', 'category', 'type'));
     }
 
-    public function byCategory($category)
-    {
-        if (!in_array($category, ['wood', 'stone', 'metal'])) {
-            abort(404);
-        }
-
-        $media = Media::published()->byCategory($category)->ordered()->get();
-        $featuredMedia = Media::published()->byCategory($category)->featured()->ordered()->limit(4)->get();
-
-        return view('gallery.category', compact('media', 'featuredMedia', 'category'));
-    }
-
     public function create()
     {
         $this->authorize('create', Media::class);

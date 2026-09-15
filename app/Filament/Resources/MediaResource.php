@@ -59,8 +59,8 @@ class MediaResource extends Resource
                             ->required()
                             ->live()
                             ->reactive()
-                            ->disk('public_root')
-                            ->directory('images/media')
+                            ->disk('public')
+                            ->directory('media/uploads')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime', 'video/mov', 'video/avi', 'video/webm'])
                             ->helperText('Accepted formats: JPG, PNG, GIF, WebP, MP4, MOV, AVI, WebM (Max 50MB)')
                             ->maxSize(51200) // 50MB
@@ -105,10 +105,9 @@ class MediaResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('file_path')
                     ->label('Preview')
-                    ->disk('public_root')
+                    ->disk('public')
                     ->square()
-                    ->size(60)
-                    ->defaultImageUrl(url('/images/placeholder.jpg')),
+                    ->size(60),
                 
                 Tables\Columns\TextColumn::make('title')
                     ->label('Title')

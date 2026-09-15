@@ -26,7 +26,9 @@ Route::get('/', function () {
 
 // Gallery Routes
 Route::get('/gallery', [MediaController::class, 'gallery'])->name('gallery');
-Route::get('/gallery/{category}', [MediaController::class, 'byCategory'])->name('gallery.category');
+Route::get('/gallery/{category}', function (string $category) {
+    return redirect()->route('gallery', ['category' => $category]);
+})->whereIn('category', ['wood', 'stone', 'metal'])->name('gallery.category');
 
 // Admin Media Routes
 Route::middleware('auth')->group(function () {
@@ -35,6 +37,34 @@ Route::middleware('auth')->group(function () {
 
 // Language switch
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
+
+// Robots.txt
+Route::get('/robots.txt', function () {
+    $lines = [
+        'User-agent: *',
+        'Disallow: /media',
+        'Disallow: /login',
+        '',
+        'Sitemap: ' . route('sitemap'),
+    ];
+
+    return response(implode("\n", $lines))->header('Content-Type', 'text/plain');
+});
+
+// Sitemap
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
+        ['loc' => route('gallery'), 'changefreq' => 'weekly', 'priority' => '0.8'],
+        ['loc' => route('gallery', ['category' => 'wood']), 'changefreq' => 'weekly', 'priority' => '0.6'],
+        ['loc' => route('gallery', ['category' => 'stone']), 'changefreq' => 'weekly', 'priority' => '0.6'],
+        ['loc' => route('gallery', ['category' => 'metal']), 'changefreq' => 'weekly', 'priority' => '0.6'],
+    ];
+
+    return response()
+        ->view('sitemap', compact('urls'))
+        ->header('Content-Type', 'text/xml');
+})->name('sitemap');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

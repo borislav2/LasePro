@@ -1,18 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lase Pro - Прецизно лазерно почистване </title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}">
+    <title>{{ __('messages.meta_title_home') }}</title>
+    <meta name="description" content="{{ __('messages.meta_description_home') }}">
+    <link rel="canonical" href="{{ url('/') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="{{ __('messages.meta_title_home') }}">
+    <meta property="og:description" content="{{ __('messages.meta_description_home') }}">
+    <meta property="og:image" content="{{ asset('images/icons/icon-512.png') }}">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'bg' ? 'bg_BG' : 'en_US' }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ __('messages.meta_title_home') }}">
+    <meta name="twitter:description" content="{{ __('messages.meta_description_home') }}">
+    <meta name="twitter:image" content="{{ asset('images/icons/icon-512.png') }}">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/icons/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <meta name="theme-color" content="#0c4a6e">
+
+    <!-- Structured Data -->
+    @php
+        $localBusinessSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'LocalBusiness',
+            'name' => 'LasePro',
+            'image' => asset('images/icons/icon-512.png'),
+            'url' => url('/'),
+            'telephone' => '+359886548030',
+            'email' => 'lase.pro.bg@gmail.com',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Varna',
+                'addressCountry' => 'BG',
+            ],
+            'sameAs' => [
+                'https://www.instagram.com/lase.pro',
+                'https://www.facebook.com/profile.php?id=61577003014554',
+            ],
+            'description' => __('messages.meta_description_home'),
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/laser.css') }}">
     @livewireStyles
     <style>
         :root {
             --bg-body: #f0f9ff;
             --text-body: #0c4a6e;
+            --laser-red: #ef233c;
+            --laser-red-glow: rgba(239, 35, 60, 0.45);
         }
         
         [data-theme="dark"] {
@@ -21,6 +71,7 @@
         }
         
         body, html {
+            font-family: 'Inter', sans-serif;
             color: var(--text-body) !important;
             -webkit-text-fill-color: var(--text-body) !important;
             background: var(--bg-body) !important;
@@ -28,10 +79,18 @@
             overflow-x: hidden;
             max-width: 100vw;
         }
-        
+
         .tech-font {
-            font-family: 'Orbitron', 'Exo 2', 'Montserrat', monospace;
-            
+            font-family: 'Unbounded', 'Inter', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .accent-red { color: var(--laser-red) !important; -webkit-text-fill-color: var(--laser-red) !important; }
+        .eyebrow {
+            font-family: 'Unbounded', 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
         .brand-heading {
             color: var(--text-dark) !important;
@@ -92,21 +151,50 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, 
-                rgba(224, 242, 254, 0.3) 0%, 
-                rgba(224, 242, 254, 0.5) 50%,
-                rgba(224, 242, 254, 0.95) 85%,
+            background: linear-gradient(to bottom,
+                rgba(3, 10, 20, 0.25) 0%,
+                rgba(3, 10, 20, 0.45) 45%,
+                rgba(3, 10, 20, 0.8) 78%,
                 rgba(224, 242, 254, 1) 100%);
             z-index: 1;
         }
         [data-theme="dark"] .hero-overlay {
-            background: linear-gradient(to bottom, 
-                rgba(2, 6, 23, 0.3) 0%, 
+            background: linear-gradient(to bottom,
+                rgba(2, 6, 23, 0.3) 0%,
                 rgba(2, 6, 23, 0.5) 50%,
                 rgba(2, 6, 23, 0.95) 85%,
                 rgba(2, 6, 23, 1) 100%);
         }
-        
+        .hero-title-text {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.45);
+        }
+        .hero-desc-text {
+            color: rgba(255,255,255,0.88) !important;
+            -webkit-text-fill-color: rgba(255,255,255,0.88) !important;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+        }
+        .section-title-white {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.65), 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .gallery-tile {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+        .gallery-tile .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         /* Navigation theme styles */
         .nav-theme {
             background: var(--nav-bg);
@@ -119,9 +207,189 @@
         .section-gradient-1 { 
             background: linear-gradient(to bottom, var(--soft-sky), var(--aqua-light)); 
         }
-        .section-gradient-2 { 
-            background: linear-gradient(to bottom, var(--aqua-light), var(--soft-sky)); 
+        .section-gradient-2 {
+            background: linear-gradient(to bottom, var(--aqua-light), var(--soft-sky));
         }
+
+        /* Hero CTAs — fixed appearance regardless of light/dark theme */
+        .hero-cta-primary {
+            background: linear-gradient(135deg, var(--laser-red), #b3122a);
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            box-shadow: 0 10px 30px var(--laser-red-glow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .hero-cta-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px var(--laser-red-glow); }
+        .hero-cta-secondary {
+            background: rgba(30, 41, 59, 0.85) !important;
+            color: #bae6fd !important;
+            -webkit-text-fill-color: #bae6fd !important;
+            border: 1px solid #334155;
+            backdrop-filter: blur(8px);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+        .hero-cta-secondary:hover { transform: translateY(-3px); border-color: #38bdf8; }
+
+        /* Services */
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 2rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            backdrop-filter: blur(6px);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px var(--shadow-color);
+            border-color: var(--laser-red);
+        }
+        .service-icon {
+            width: 56px; height: 56px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--aqua-mint));
+            font-size: 1.6rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 10px 24px var(--shadow-color);
+        }
+        .service-list { color: var(--text-ocean); }
+        .service-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.55rem;
+            line-height: 1.5;
+        }
+        .service-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--sea-green);
+            font-weight: 700;
+        }
+
+        /* How It Works */
+        .step-card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px var(--shadow-color);
+            border-color: var(--laser-red);
+        }
+        .step-ghost-number {
+            position: absolute;
+            top: -0.75rem;
+            right: 0.75rem;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 5.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--ocean-blue);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        .step-icon {
+            width: 64px; height: 64px;
+            margin: 0 auto 1.25rem;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--laser-red), var(--ocean-blue));
+            font-size: 1.75rem;
+            box-shadow: 0 12px 28px var(--shadow-color);
+            position: relative;
+        }
+        .step-arrow {
+            align-items: center;
+            justify-content: center;
+            color: var(--laser-red);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            opacity: 0.55;
+        }
+
+        /* Before/After Compare Slider */
+        .compare-slider {
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        .compare-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #000;
+        }
+        .compare-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            user-select: none;
+            pointer-events: none;
+        }
+        .compare-handle {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 3px;
+            background: #fff;
+            transform: translateX(-50%);
+            z-index: 3;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        .compare-handle::after {
+            content: '\21D4';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: #fff;
+            color: var(--ocean-blue);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+        }
+        .compare-range {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            cursor: ew-resize;
+            z-index: 4;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .compare-label {
+            position: absolute;
+            top: 1rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .compare-label-before { left: 1rem; background: rgba(0,0,0,0.65); color: #fff; }
+        .compare-label-after { right: 1rem; background: var(--laser-red); color: #fff; }
     </style>
 </head>
 <body class="text-[var(--text-body)] overflow-x-hidden px-0">
@@ -222,14 +490,22 @@
         <div class="max-w-7xl mx-auto text-center relative z-10 pt-20">
             <div class="fade-in-up">
                
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tech-font">
-                 <span class="block brand-heading">{{ __('messages.hero_title') }}</span>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tech-font hero-title-text">
+                 <span class="block">{{ __('messages.hero_title') }}</span>
                 </h1>
-                
-                <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed" style="color: var(--text-ocean);">
+
+                <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed hero-desc-text">
                     {{ __('messages.hero_description') }}
                 </p>
-                
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{{ route('home') }}#contact" class="hero-cta-primary inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-lg">
+                        {{ __('messages.get_free_quote') ?? __('messages.get_quote') }}
+                    </a>
+                    <a href="{{ route('gallery') }}" class="hero-cta-secondary inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-lg">
+                        {{ __('messages.view_gallery') }}
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -241,16 +517,142 @@
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section id="services" class="py-24 section-light relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <span class="eyebrow inline-block px-4 py-1.5 rounded-full mb-4" style="background: var(--card-bg); color: var(--laser-red); border: 1px solid var(--border-color);">{{ __('messages.services') }}</span>
+                <h2 class="tech-font text-4xl md:text-5xl font-bold mb-4" style="color: var(--text-dark);">{{ __('messages.comprehensive_services') }}</h2>
+                <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-ocean);">{{ __('messages.professional_laser_cleaning') }}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="service-card fade-in-up" style="animation-delay:0.05s">
+                    <div class="service-icon">🔩</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.rust_corrosion') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.complete_solution') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.surface_rust_removal') }}</li>
+                        <li>{{ __('messages.deep_corrosion_treatment') }}</li>
+                        <li>{{ __('messages.metal_surface_preparation') }}</li>
+                        <li>{{ __('messages.no_structural_damage') }}</li>
+                        <li>{{ __('messages.immediate_protection_ready') }}</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up" style="animation-delay:0.1s">
+                    <div class="service-icon">🏭</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.industrial_cleaning') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.complete_solution') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.automotive_parts') }}</li>
+                        <li>{{ __('messages.chassis_cleaning') }}</li>
+                        <li>{{ __('messages.turbine_maintenance') }}</li>
+                        <li>{{ __('messages.engine_blocks') }}</li>
+                        <li>{{ __('messages.no_chemical_residue') }}</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up" style="animation-delay:0.15s">
+                    <div class="service-icon">🏙️</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.urban_cleaning') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.complete_solution') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.building_facades') }}</li>
+                        <li>{{ __('messages.public_facilities') }}</li>
+                        <li>{{ __('messages.all_paint_types') }}</li>
+                        <li>{{ __('messages.instant_results') }}</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up" style="animation-delay:0.2s">
+                    <div class="service-icon">⚡</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.metal_treatment') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.complete_solution') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.oxidation_removal') }}</li>
+                        <li>{{ __('messages.surface_preparation') }}</li>
+                        <li>{{ __('messages.no_chemical_use') }}</li>
+                        <li>{{ __('messages.perfect_for_welding') }}</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up" style="animation-delay:0.25s">
+                    <div class="service-icon">🗿</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.respectful_cleaning') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.historic_preservation_service') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.memorial_stones') }}</li>
+                        <li>{{ __('messages.statue_restoration') }}</li>
+                        <li>{{ __('messages.plaque_cleaning') }}</li>
+                        <li>{{ __('messages.gentle_treatment') }}</li>
+                    </ul>
+                </div>
+
+                <div class="service-card fade-in-up" style="animation-delay:0.3s">
+                    <div class="service-icon">🎨</div>
+                    <h3 class="tech-font text-xl font-bold mb-1" style="color: var(--text-dark);">{{ __('messages.surface_prep') }}</h3>
+                    <p class="text-sm font-semibold mb-4 accent-red">{{ __('messages.complete_solution') }}</p>
+                    <ul class="service-list text-sm">
+                        <li>{{ __('messages.lacquer_stripping') }}</li>
+                        <li>{{ __('messages.primer_removal') }}</li>
+                        <li>{{ __('messages.metal_preparation') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-24 section-gradient-2 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <span class="eyebrow inline-block px-4 py-1.5 rounded-full mb-4" style="background: var(--card-bg); color: var(--laser-red); border: 1px solid var(--border-color);">{{ __('messages.how_it_works') }}</span>
+                <h2 class="tech-font text-4xl md:text-5xl font-bold" style="color: var(--text-dark);">{{ __('messages.how_it_works_title') }}</h2>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-stretch gap-4">
+                <div class="step-card flex-1 fade-in-up" style="animation-delay:0.05s">
+                    <span class="step-ghost-number">01</span>
+                    <div class="step-icon">🔍</div>
+                    <p class="eyebrow mb-2 accent-red">{{ __('messages.step_1_title') }}</p>
+                    <h3 class="tech-font text-2xl font-bold mb-3" style="color: var(--text-dark);">{{ __('messages.step_1_subtitle') }}</h3>
+                    <p style="color: var(--text-ocean);">{{ __('messages.step_1_description') }}</p>
+                </div>
+
+                <div class="step-arrow hidden md:flex">➜</div>
+
+                <div class="step-card flex-1 fade-in-up" style="animation-delay:0.2s">
+                    <span class="step-ghost-number">02</span>
+                    <div class="step-icon">⚡</div>
+                    <p class="eyebrow mb-2 accent-red">{{ __('messages.step_2_title') }}</p>
+                    <h3 class="tech-font text-2xl font-bold mb-3" style="color: var(--text-dark);">{{ __('messages.step_2_subtitle') }}</h3>
+                    <p style="color: var(--text-ocean);">{{ __('messages.step_2_description') }}</p>
+                </div>
+
+                <div class="step-arrow hidden md:flex">➜</div>
+
+                <div class="step-card flex-1 fade-in-up" style="animation-delay:0.35s">
+                    <span class="step-ghost-number">03</span>
+                    <div class="step-icon">✨</div>
+                    <p class="eyebrow mb-2 accent-red">{{ __('messages.step_3_title') }}</p>
+                    <h3 class="tech-font text-2xl font-bold mb-3" style="color: var(--text-dark);">{{ __('messages.step_3_subtitle') }}</h3>
+                    <p style="color: var(--text-ocean);">{{ __('messages.step_3_description') }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- WOOD Section - Fullscreen -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden" id="wood">
         <!-- Video Background -->
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 20%;">
             <source src="{{ asset('images/wood1.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🪵</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.wood_restoration') }}</h2>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8 section-title-white">{{ __('messages.wood_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($woodMedia->count() > 0)
@@ -274,7 +676,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     {{ __('messages.view_gallery') ?? 'View Gallery' }}
                 </a>
-                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white bg-black/35 backdrop-blur-md hover:bg-white hover:text-cyan-900 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                     {{ __('messages.get_quote') ?? 'Get Quote' }}
                 </a>
@@ -292,10 +694,10 @@
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 30%;">
             <source src="{{ asset('images/StoneRemove.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">🏛️</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.stone_restoration') }}</h2>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8 section-title-white">{{ __('messages.stone_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($stoneMedia->count() > 0)
@@ -319,7 +721,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     {{ __('messages.view_gallery') ?? 'View Gallery' }}
                 </a>
-                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white bg-black/35 backdrop-blur-md hover:bg-white hover:text-cyan-900 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                     {{ __('messages.get_quote') ?? 'Get Quote' }}
                 </a>
@@ -336,10 +738,10 @@
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover" style="object-position: center 25%;">
             <source src="{{ asset('images/metalvideo2.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55"></div>
         <div class="relative z-10 text-center text-white px-4">
             <div class="text-6xl mb-4">⚙️</div>
-            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8">{{ __('messages.metal_restoration') }}</h2>
+            <h2 class="text-5xl md:text-7xl font-bold tech-font mb-8 section-title-white">{{ __('messages.metal_restoration') }}</h2>
             
             <!-- Featured Media Preview -->
             @if($metalMedia->count() > 0)
@@ -363,7 +765,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     {{ __('messages.view_gallery') ?? 'View Gallery' }}
                 </a>
-                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-cyan-900 transition-all">
+                <a href="{{ route('home') }}#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-white text-white bg-black/35 backdrop-blur-md hover:bg-white hover:text-cyan-900 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                     {{ __('messages.get_quote') ?? 'Get Quote' }}
                 </a>
@@ -371,9 +773,45 @@
         </div>
     </section>
 
-    <!-- New Gallery Section with Tabs -->
-   
+    <!-- Before / After Slider Section -->
+    <section class="py-24 section-light relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="tech-font text-4xl md:text-5xl font-bold mb-4" style="color: var(--text-dark);">{{ __('messages.see_the_difference') }}</h2>
+                <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-ocean);">{{ __('messages.drag_slider') }}</p>
+            </div>
 
+            <div class="grid md:grid-cols-2 gap-10 mt-14">
+                <div class="fade-in-up" style="animation-delay:0.1s">
+                    <div class="compare-slider">
+                        <div class="compare-media">
+                            <img src="{{ asset('storage/media/images/metal/marble-table-legs-after.jpg') }}" alt="{{ __('messages.after') }}" class="compare-img">
+                            <img src="{{ asset('storage/media/images/metal/marble-table-legs-before.jpg') }}" alt="{{ __('messages.before') }}" class="compare-img compare-before" style="clip-path: inset(0 50% 0 0);">
+                            <div class="compare-handle" style="left:50%"></div>
+                            <span class="compare-label compare-label-before">{{ __('messages.before') }}</span>
+                            <span class="compare-label compare-label-after">{{ __('messages.after') }}</span>
+                            <input type="range" min="0" max="100" value="50" class="compare-range" aria-label="{{ __('messages.drag_slider') }}">
+                        </div>
+                    </div>
+                    <h3 class="tech-font text-xl font-bold mt-5 text-center" style="color: var(--text-dark);">{{ __('messages.metal_restoration') }}</h3>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay:0.2s">
+                    <div class="compare-slider">
+                        <div class="compare-media">
+                            <img src="{{ asset('storage/media/images/metal/bronze-legs-after.jpg') }}" alt="{{ __('messages.after') }}" class="compare-img">
+                            <img src="{{ asset('storage/media/images/metal/bronze-legs-before.jpg') }}" alt="{{ __('messages.before') }}" class="compare-img compare-before" style="clip-path: inset(0 50% 0 0);">
+                            <div class="compare-handle" style="left:50%"></div>
+                            <span class="compare-label compare-label-before">{{ __('messages.before') }}</span>
+                            <span class="compare-label compare-label-after">{{ __('messages.after') }}</span>
+                            <input type="range" min="0" max="100" value="50" class="compare-range" aria-label="{{ __('messages.drag_slider') }}">
+                        </div>
+                    </div>
+                    <h3 class="tech-font text-xl font-bold mt-5 text-center" style="color: var(--text-dark);">{{ __('messages.restoration_mastery') }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         // Gallery State
@@ -440,27 +878,51 @@
                 </h2>
             </div>
 
-            <div class="masonry-grid">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <!-- Gallery Item 1 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.1s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/stoneg.jpg') }}" alt="Laser cleaning project 1" class="w-full rounded-lg gallery-img">
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.1s" onclick="openLightbox(this)">
+                    <img src="{{ asset('images/stoneg.jpg') }}" alt="Laser cleaning project 1" class="gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
                     </div>
                 </div>
                 <!-- Gallery Item 2 -->
-                 <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.2s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/stone.jpg') }}" alt="Laser cleaning project 7" class="w-full rounded-lg gallery-img">
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.2s" onclick="openLightbox(this)">
+                    <img src="{{ asset('images/stone.jpg') }}" alt="Laser cleaning project 7" class="gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
                     </div>
                 </div>
-              
+
                 <!-- Gallery Item 3 -->
-                <div class="masonry-item fade-in-up gallery-item" style="animation-delay: 0.3s" onclick="openLightbox(this)">
-                    <img src="{{ asset('images/metal1.jpg') }}" alt="Laser cleaning project 3" class="w-full rounded-lg gallery-img">
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.3s" onclick="openLightbox(this)">
+                    <img src="{{ asset('images/metal1.jpg') }}" alt="Laser cleaning project 3" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">🔍</div>
+                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
+                    </div>
+                </div>
+                <!-- Gallery Item 4 -->
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.4s" onclick="openLightbox(this)">
+                    <img src="{{ asset('storage/media/images/wood/carved-wood-detail.png') }}" alt="Laser cleaning project 4" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">🔍</div>
+                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
+                    </div>
+                </div>
+                <!-- Gallery Item 5 -->
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.5s" onclick="openLightbox(this)">
+                    <img src="{{ asset('storage/media/images/metal/lion-door-knocker.jpg') }}" alt="Laser cleaning project 5" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">🔍</div>
+                        <p class="gallery-text">{{ __('messages.view_project') }}</p>
+                    </div>
+                </div>
+                <!-- Gallery Item 6 -->
+                <div class="gallery-tile fade-in-up gallery-item" style="animation-delay: 0.6s" onclick="openLightbox(this)">
+                    <img src="{{ asset('storage/media/images/metal/marble-table-legs-after.jpg') }}" alt="Laser cleaning project 6" class="gallery-img">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">🔍</div>
                         <p class="gallery-text">{{ __('messages.view_project') }}</p>
@@ -731,12 +1193,31 @@
             }
         }
 
+        // Before/After compare sliders
+        function initCompareSliders() {
+            document.querySelectorAll('.compare-slider').forEach((el) => {
+                const range = el.querySelector('.compare-range');
+                const before = el.querySelector('.compare-before');
+                const handle = el.querySelector('.compare-handle');
+                if (!range || !before || !handle) return;
+
+                function update(v) {
+                    before.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+                    handle.style.left = v + '%';
+                }
+
+                range.addEventListener('input', (e) => update(e.target.value));
+                update(range.value);
+            });
+        }
+
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             initGallery();
             addLaserEffects();
             initThemeToggle();
+            initCompareSliders();
             handleScroll();
             window.addEventListener('scroll', handleScroll);
         });

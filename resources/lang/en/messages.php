@@ -12,6 +12,12 @@ return [
     // Hero
     'hero_title' => 'LASER CLEANING',
     'hero_description' => '• Stone • Wood • Metal •',
+
+    // SEO
+    'meta_title_home' => 'LasePro Varna – Laser Cleaning for Stone, Wood & Metal',
+    'meta_description_home' => 'Professional laser cleaning in Varna, Bulgaria: graffiti, rust, oxidation and dirt removal from stone, wood and metal surfaces — chemical-free and damage-free. Get a free quote.',
+    'meta_title_gallery' => 'Project Gallery – LasePro Varna',
+    'meta_description_gallery' => 'Browse before/after photos and videos from real laser cleaning projects on stone, wood and metal, completed by LasePro in Varna, Bulgaria.',
     
     // Services
     'rust_corrosion' => 'Rust & Corrosion',
