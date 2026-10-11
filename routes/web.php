@@ -17,11 +17,10 @@ use App\Models\Media;
 
 // Home page - Laser Cleaning Website
 Route::get('/', function () {
-    $woodMedia = Media::published()->byCategory('wood')->featured()->ordered()->limit(4)->get();
-    $stoneMedia = Media::published()->byCategory('stone')->featured()->ordered()->limit(4)->get();
-    $metalMedia = Media::published()->byCategory('metal')->featured()->ordered()->limit(4)->get();
-    
-    return view('laser-home', compact('woodMedia', 'stoneMedia', 'metalMedia'));
+    $counts = Media::published()->selectRaw('category, count(*) as n')->groupBy('category')->pluck('n', 'category');
+    $preview = Media::published()->byType('image')->orderByDesc('is_featured')->ordered()->limit(6)->get();
+
+    return view('laser-home', compact('counts', 'preview'));
 })->name('home');
 
 // Gallery Routes

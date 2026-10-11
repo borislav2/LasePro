@@ -113,4 +113,9 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    | Получател на заявките от формата за оферта.
+    */
+    'reservation_to' => env('MAIL_RESERVATION_TO', 'lase.pro.bg@gmail.com'),
+
 ];

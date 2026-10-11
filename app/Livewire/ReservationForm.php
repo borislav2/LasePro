@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Reservation;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,15 +31,23 @@ class ReservationForm extends Component
         'images.*' => 'image|max:5120',
     ];
 
-    protected $messages = [
-        'name.required' => 'Please enter your name.',
-        'phone.required' => 'Please enter your phone number.',
-        'address.required' => 'Please enter your address in Varna.',
-        'preferred_date.after_or_equal' => 'Please select a date today or in the future.',
-        'images.max' => 'You can upload up to 5 images.',
-        'images.*.image' => 'Each file must be an image.',
-        'images.*.max' => 'Each image must be less than 5MB.',
-    ];
+    protected function messages()
+    {
+        return [
+            'name.required' => __('messages.err_name'),
+            'name.min' => __('messages.err_name'),
+            'phone.required' => __('messages.err_phone'),
+            'phone.min' => __('messages.err_phone'),
+            'address.required' => __('messages.err_address'),
+            'address.min' => __('messages.err_address'),
+            'message.max' => __('messages.err_message'),
+            'preferred_date.date' => __('messages.err_date'),
+            'preferred_date.after_or_equal' => __('messages.err_date'),
+            'images.max' => __('messages.err_images_max'),
+            'images.*.image' => __('messages.err_image_type'),
+            'images.*.max' => __('messages.err_image_size'),
+        ];
+    }
 
     public function removeImage($key)
     {
@@ -56,7 +66,7 @@ class ReservationForm extends Component
             'phone' => $this->phone,
             'address' => $this->address,
             'message' => $this->message,
-            'preferred_date' => $this->preferred_date,
+            'preferred_date' => $this->preferred_date ?: null,
         ]);
 
         $imagePaths = [];
@@ -67,17 +77,22 @@ class ReservationForm extends Component
             }
         }
 
-        $this->sendStyledEmail($reservation, $imagePaths);
+        // Заявката вече е запазена; проблем с пощата не бива да губи или да блокира клиента.
+        try {
+            $this->sendStyledEmail($reservation, $imagePaths);
+        } catch (\Throwable $e) {
+            Log::error('Reservation email failed', ['reservation_id' => $reservation->id, 'error' => $e->getMessage()]);
+        }
 
         $this->reset();
-        session()->flash('success', 'Your request has been submitted successfully! We will contact you soon.');
+        session()->flash('success', __('messages.form_success'));
         $this->dispatch('reservation-success');
     }
 
     private function sendStyledEmail($reservation, $imagePaths)
     {
-        $toEmail = 'borislavkostadinov00@gmail.com';
-        $subject = 'New Laser Cleaning Reservation - ' . $reservation->name;
+        $toEmail = config('mail.reservation_to');
+        $subject = 'Нова заявка за оферта - ' . $reservation->name;
         $htmlContent = $this->buildStyledEmailHtml($reservation);
 
         Mail::send([], [], function ($message) use ($toEmail, $subject, $htmlContent, $imagePaths) {
@@ -96,15 +111,18 @@ class ReservationForm extends Component
 
     private function buildStyledEmailHtml($reservation)
     {
-        $date = $reservation->preferred_date ? date('F j, Y', strtotime($reservation->preferred_date)) : 'Not specified';
+        $date = $reservation->preferred_date
+            ? Carbon::parse($reservation->preferred_date)->locale('bg')->isoFormat('D MMMM YYYY')
+            : 'Не е посочена';
+        $submitted = $reservation->created_at->copy()->setTimezone('Europe/Sofia')->locale('bg')->isoFormat('D MMMM YYYY, HH:mm');
         $imageCount = count($this->images);
 
         return '<!DOCTYPE html>
-<html>
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Reservation - Lase Pro</title>
+    <title>Нова заявка - Lase Pro</title>
     <style>
         body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #0c4a6e 0%, #0891b2 100%); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
@@ -122,7 +140,6 @@ class ReservationForm extends Component
         .footer { background: #0c4a6e; padding: 20px; text-align: center; }
         .footer p { color: #94a3b8; margin: 0; font-size: 12px; }
         .footer .brand { color: #22d3ee; font-weight: 700; font-size: 16px; }
-        .highlight { background: linear-gradient(120deg, #22d3ee 0%, #22d3ee 100%); background-repeat: no-repeat; background-size: 100% 30%; background-position: 0 88%; padding: 0 4px; }
         @media only screen and (max-width: 600px) { .content { padding: 20px; } .info-row { flex-direction: column; } .info-label { margin-bottom: 4px; } }
     </style>
 </head>
@@ -130,32 +147,32 @@ class ReservationForm extends Component
     <div class="container">
         <div class="header">
             <h1>LASE PRO</h1>
-            <div class="subtitle">New Reservation Request</div>
+            <div class="subtitle">Нова заявка за оферта</div>
         </div>
         <div class="content">
             <div class="info-section">
-                <h3>Customer Information</h3>
-                <div class="info-row"><span class="info-label">Name:</span><span class="info-value highlight">' . htmlspecialchars($reservation->name) . '</span></div>
-                <div class="info-row"><span class="info-label">Phone:</span><span class="info-value">' . htmlspecialchars($reservation->phone) . '</span></div>
-                <div class="info-row"><span class="info-label">Address:</span><span class="info-value">' . htmlspecialchars($reservation->address) . '</span></div>
+                <h3>Данни за клиента</h3>
+                <div class="info-row"><span class="info-label">Име:</span><span class="info-value" style="font-weight:700;">' . htmlspecialchars($reservation->name) . '</span></div>
+                <div class="info-row"><span class="info-label">Телефон:</span><span class="info-value">' . htmlspecialchars($reservation->phone) . '</span></div>
+                <div class="info-row"><span class="info-label">Адрес:</span><span class="info-value">' . htmlspecialchars($reservation->address) . '</span></div>
             </div>
             <div class="info-section">
-                <h3>Appointment Details</h3>
-                <div class="info-row"><span class="info-label">Preferred Date:</span><span class="info-value">' . $date . '</span></div>
-                <div class="info-row"><span class="info-label">Submitted:</span><span class="info-value">' . $reservation->created_at->format('F j, Y g:i A') . '</span></div>
+                <h3>Срок</h3>
+                <div class="info-row"><span class="info-label">Желана дата:</span><span class="info-value">' . $date . '</span></div>
+                <div class="info-row"><span class="info-label">Изпратена на:</span><span class="info-value">' . $submitted . '</span></div>
             </div>
             <div class="info-section">
-                <h3>Project Details</h3>
-                <div class="message-box"><p>' . ($reservation->message ? nl2br(htmlspecialchars($reservation->message)) : 'No additional details provided.') . '</p></div>
+                <h3>Описание на проекта</h3>
+                <div class="message-box"><p>' . ($reservation->message ? nl2br(htmlspecialchars($reservation->message)) : 'Няма добавено описание.') . '</p></div>
             </div>
             <div class="info-section" style="border-left-color: #f59e0b;">
-                <h3 style="color: #d97706;">Attachments</h3>
-                <div class="info-value">' . ($imageCount > 0 ? $imageCount . ' image(s) attached to this email.' : 'No images uploaded.') . '</div>
+                <h3 style="color: #d97706;">Прикачени файлове</h3>
+                <div class="info-value">' . ($imageCount > 0 ? 'Снимки към заявката: ' . $imageCount . ' (прикачени към това писмо).' : 'Не са качени снимки.') . '</div>
             </div>
         </div>
         <div class="footer">
             <div class="brand">LASE PRO</div>
-            <p>Precision Laser Cleaning | Varna, Bulgaria</p>
+            <p>Прецизно лазерно почистване | Варна, България</p>
             <p style="margin-top: 8px;">lase.pro.bg@gmail.com | +359 886 548 030</p>
         </div>
     </div>

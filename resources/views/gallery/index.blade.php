@@ -1,245 +1,104 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('messages.meta_title_gallery') }}</title>
-    <meta name="description" content="{{ __('messages.meta_description_gallery') }}">
-    <link rel="canonical" href="{{ route('gallery') }}">
+@extends('layouts.site')
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ route('gallery') }}">
-    <meta property="og:title" content="{{ __('messages.meta_title_gallery') }}">
-    <meta property="og:description" content="{{ __('messages.meta_description_gallery') }}">
-    <meta property="og:image" content="{{ asset('images/icons/icon-512.png') }}">
-    <meta property="og:locale" content="{{ app()->getLocale() === 'bg' ? 'bg_BG' : 'en_US' }}">
+@section('title', __('messages.meta_title_gallery'))
+@section('description', __('messages.meta_description_gallery'))
+@section('canonical', route('gallery'))
+@section('nav_solid', '1')
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ __('messages.meta_title_gallery') }}">
-    <meta name="twitter:description" content="{{ __('messages.meta_description_gallery') }}">
-    <meta name="twitter:image" content="{{ asset('images/icons/icon-512.png') }}">
+@php
+    $url = fn ($c, $t) => route('gallery', array_filter(['category' => $c, 'type' => $t]));
 
-    <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/icons/favicon-32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-touch-icon.png') }}">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <meta name="theme-color" content="#0c4a6e">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/laser.css') }}">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .tech-font { font-family: 'Unbounded', 'Inter', sans-serif; letter-spacing: -0.02em; }
-    </style>
-</head>
-<body class="bg-gradient-to-b from-sky-50 to-cyan-50 min-h-screen">
-<div class="min-h-screen bg-gradient-to-b from-[var(--soft-sky)] to-[var(--aqua-light)] py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Back Button -->
-        <div class="mb-8">
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 hover:bg-white text-cyan-700 font-medium transition-all duration-300 shadow-sm hover:shadow-md">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-                {{ __('messages.back_home') ?? 'Back to Home' }}
-            </a>
-        </div>
+    $items = $media->map(fn ($m) => [
+        'id' => $m->id,
+        'type' => $m->type,
+        'src' => asset('storage/' . $m->file_path),
+        'title' => $m->title,
+        'desc' => $m->description,
+    ])->values();
+@endphp
 
-        <div class="text-center mb-12">
-            <h1 class="tech-font text-4xl md:text-5xl font-bold text-[var(--ocean-blue)] mb-8">
-                {{ __('messages.gallery_heading') ?? 'Our Work Gallery' }}
-            </h1>
-        </div>
+@section('content')
 
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center gap-3 mb-10">
-            <a href="{{ route('gallery') }}" 
-               class="px-6 py-3 rounded-full font-medium transition-all duration-300 {{ !$category && !$type ? 'bg-cyan-500 text-white shadow-lg' : 'bg-white/70 text-cyan-700 hover:bg-cyan-100' }}">
-                {{ __('messages.all') ?? 'All' }}
-            </a>
-            <a href="{{ route('gallery', ['category' => 'wood']) }}" 
-               class="px-6 py-3 rounded-full font-medium transition-all duration-300 {{ $category === 'wood' ? 'bg-amber-500 text-white shadow-lg' : 'bg-white/70 text-amber-700 hover:bg-amber-100' }}">
-                {{ __('messages.wood') ?? 'Wood' }}
-            </a>
-            <a href="{{ route('gallery', ['category' => 'stone']) }}" 
-               class="px-6 py-3 rounded-full font-medium transition-all duration-300 {{ $category === 'stone' ? 'bg-slate-500 text-white shadow-lg' : 'bg-white/70 text-slate-700 hover:bg-slate-100' }}">
-                {{ __('messages.stone') ?? 'Stone' }}
-            </a>
-            <a href="{{ route('gallery', ['category' => 'metal']) }}" 
-               class="px-6 py-3 rounded-full font-medium transition-all duration-300 {{ $category === 'metal' ? 'bg-blue-500 text-white shadow-lg' : 'bg-white/70 text-blue-700 hover:bg-blue-100' }}">
-                {{ __('messages.metal') ?? 'Metal' }}
-            </a>
-        </div>
+    <section class="gal-head">
+        <div class="wrap">
+            <h1 class="gal-title">{{ __('messages.gallery_heading') }}</h1>
 
-        <!-- Type Filter -->
-        <div class="flex flex-wrap justify-center gap-2 mb-10">
-            <a href="{{ route('gallery', array_merge(request()->except('type'), $category ? ['category' => $category] : [])) }}" 
-               class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 {{ !$type ? 'bg-cyan-500/20 text-cyan-700 border-2 border-cyan-500' : 'bg-white/50 text-cyan-600 border-2 border-transparent hover:border-cyan-300' }}">
-                {{ __('messages.all_types') ?? 'All Types' }}
-            </a>
-            <a href="{{ route('gallery', array_merge(['type' => 'image'], request()->except('type'), $category ? ['category' => $category] : [])) }}" 
-               class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 {{ $type === 'image' ? 'bg-cyan-500/20 text-cyan-700 border-2 border-cyan-500' : 'bg-white/50 text-cyan-600 border-2 border-transparent hover:border-cyan-300' }}">
-                {{ __('messages.images') ?? 'Images' }}
-            </a>
-            <a href="{{ route('gallery', array_merge(['type' => 'video'], request()->except('type'), $category ? ['category' => $category] : [])) }}" 
-               class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 {{ $type === 'video' ? 'bg-cyan-500/20 text-cyan-700 border-2 border-cyan-500' : 'bg-white/50 text-cyan-600 border-2 border-transparent hover:border-cyan-300' }}">
-                {{ __('messages.videos') ?? 'Videos' }}
-            </a>
-        </div>
-
-        <!-- Media Grid -->
-        @if($media->count() > 0)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($media as $item)
-            <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="openModal('{{ $item->isVideo() ? 'video' : 'image' }}', '{{ asset('storage/' . $item->file_path) }}', '{{ $item->title }}')">
-                @if($item->isVideo())
-                    <video class="w-full h-64 object-cover" muted playsinline preload="metadata">
-                        <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-all">
-                        <div class="w-14 h-14 bg-red-500/90 text-white rounded-full flex items-center justify-center">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                    </div>
-                @else
-                    <img src="{{ asset('storage/' . $item->file_path) }}" alt="{{ $item->title }}"
-                         class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                        <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                        </svg>
-                    </div>
-                @endif
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div class="absolute bottom-0 left-0 right-0 p-4">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 {{ $item->category === 'wood' ? 'bg-amber-500 text-white' : ($item->category === 'stone' ? 'bg-slate-500 text-white' : 'bg-blue-500 text-white') }}">
-                            {{ ucfirst($item->category) }}
-                        </span>
-                        <h3 class="text-white font-semibold text-lg">{{ $item->title }}</h3>
-                    </div>
+            <div class="filters">
+                <div class="filters__row">
+                    <a class="chip" href="{{ $url(null, $type) }}" @if(!$category) aria-current="true" @endif>{{ __('messages.all') }}</a>
+                    @foreach (['wood', 'stone', 'metal'] as $c)
+                        <a class="chip" href="{{ $url($c, $type) }}" @if($category === $c) aria-current="true" @endif>{{ __('messages.' . $c) }}</a>
+                    @endforeach
                 </div>
-            </div>
-            @endforeach
-        </div>
-        @else
-        <div class="text-center py-16">
-            <div class="text-6xl mb-4">📷</div>
-            <h3 class="text-xl font-semibold text-gray-600 mb-2">
-                {{ __('messages.no_media_found') ?? 'No media found' }}
-            </h3>
-            <p class="text-gray-500">
-                {{ __('messages.try_different_filter') ?? 'Try selecting a different category or type.' }}
-            </p>
-        </div>
-        @endif
-
-        <!-- CTA Section -->
-        <div class="mt-16 text-center">
-            <div class="bg-gradient-to-r from-cyan-700 to-blue-800 rounded-2xl p-8 md:p-12 shadow-xl">
-                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4" style="color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
-                    {{ __('messages.ready_to_transform') ?? 'Ready to Transform Your Surfaces?' }}
-                </h2>
-                <a href="{{ route('home') }}#contact" 
-                   class="inline-flex items-center px-8 py-4 bg-white text-cyan-800 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                    {{ __('messages.get_free_quote') ?? 'Get Free Quote' }}
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal/Lightbox -->
-<div id="mediaModal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-sm" onclick="closeModal(event)">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="relative inline-block" onclick="event.stopPropagation()">
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute -top-10 right-0 text-white hover:text-cyan-400 transition-colors z-10">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-            
-            <!-- Modal Content - fits image size -->
-            <div id="modalContent" class="relative rounded-lg overflow-hidden shadow-2xl">
-                <!-- Image container -->
-                <div id="imageContainer" class="hidden">
-                    <img id="modalImage" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain">
-                    <!-- Title overlay at bottom -->
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                        <h3 id="modalImageTitle" class="text-xl font-semibold text-white"></h3>
-                    </div>
-                </div>
-                <!-- Video container -->
-                <div id="videoContainer" class="hidden">
-                    <video id="modalVideo" class="max-w-[90vw] max-h-[85vh]" controls autoplay>
-                        <source src="" type="video/mp4">
-                    </video>
-                    <!-- Title overlay at bottom for video -->
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                        <h3 id="modalVideoTitle" class="text-xl font-semibold text-white"></h3>
-                    </div>
+                <div class="filters__row">
+                    <a class="chip" href="{{ $url($category, null) }}" @if(!$type) aria-current="true" @endif>{{ __('messages.all_types') }}</a>
+                    <a class="chip" href="{{ $url($category, 'image') }}" @if($type === 'image') aria-current="true" @endif>{{ __('messages.images') }}</a>
+                    <a class="chip" href="{{ $url($category, 'video') }}" @if($type === 'video') aria-current="true" @endif>{{ __('messages.videos') }}</a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<script>
-function openModal(type, src, title) {
-    const modal = document.getElementById('mediaModal');
-    const imageContainer = document.getElementById('imageContainer');
-    const videoContainer = document.getElementById('videoContainer');
-    const modalImage = document.getElementById('modalImage');
-    const modalVideo = document.getElementById('modalVideo');
-    const modalImageTitle = document.getElementById('modalImageTitle');
-    const modalVideoTitle = document.getElementById('modalVideoTitle');
-    
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    
-    if (type === 'image') {
-        imageContainer.classList.remove('hidden');
-        videoContainer.classList.add('hidden');
-        modalImage.src = src;
-        modalImage.alt = title;
-        modalImageTitle.textContent = title;
-    } else {
-        imageContainer.classList.add('hidden');
-        videoContainer.classList.remove('hidden');
-        modalVideo.src = src;
-        modalVideoTitle.textContent = title;
-    }
-}
+    <section class="gal-body">
+        <div class="wrap">
+            @if ($media->count() > 0)
+                <div class="tiles">
+                    @foreach ($media as $i => $item)
+                        <button class="tile" type="button" id="m{{ $item->id }}" data-index="{{ $i }}">
+                            @if ($item->isVideo())
+                                <video class="tile__media" src="{{ asset('storage/' . $item->file_path) }}#t=0.1" muted playsinline preload="metadata" aria-hidden="true"></video>
+                                <span class="tile__play" aria-hidden="true">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M7 4.5v15l13-7.5z"/></svg>
+                                </span>
+                            @else
+                                <img class="tile__media" src="{{ asset('storage/' . $item->file_path) }}" alt="" loading="lazy">
+                            @endif
+                            <span class="tile__cap">{{ $item->title }}</span>
+                        </button>
+                    @endforeach
+                </div>
+            @else
+                <div class="gal-empty">
+                    <strong>{{ __('messages.no_media_found') }}</strong>
+                    <p>{{ __('messages.try_different_filter') }}</p>
+                </div>
+            @endif
+        </div>
+    </section>
 
-function closeModal(event) {
-    if (event && event.target !== event.currentTarget) return;
-    
-    const modal = document.getElementById('mediaModal');
-    const modalVideo = document.getElementById('modalVideo');
-    
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-    
-    // Stop video when closing
-    if (modalVideo) {
-        modalVideo.pause();
-        modalVideo.src = '';
-    }
-}
+    <section class="sec sec--dark">
+        <div class="wrap gal-cta">
+            <h2 class="sec__title">{{ __('messages.ready_to_transform') }}</h2>
+            <a class="btn btn--beam" href="{{ route('home') }}#contact">{{ __('messages.get_free_quote') }}</a>
+        </div>
+    </section>
 
-// Close on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-});
-</script>
+    <dialog class="lb" id="lb" aria-label="{{ __('messages.gallery_heading') }}">
+        <div class="lb__inner">
+            <div class="lb__stage" id="lb-stage">
+                <button class="lb__btn lb__btn--close" type="button" data-lb-close aria-label="{{ __('messages.lb_close') }}">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+                </button>
+                <button class="lb__btn lb__btn--prev" type="button" data-lb-prev aria-label="{{ __('messages.lb_prev') }}">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                </button>
+                <button class="lb__btn lb__btn--next" type="button" data-lb-next aria-label="{{ __('messages.lb_next') }}">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="lb__bar">
+                <div>
+                    <p class="lb__title" id="lb-title"></p>
+                    <p class="lb__desc" id="lb-desc"></p>
+                </div>
+                <span class="lb__count" id="lb-count"></span>
+            </div>
+        </div>
+    </dialog>
 
-</body>
-</html>
+@endsection
+
+@push('scripts')
+    <script>window.GALLERY = @json($items);</script>
+    <script src="{{ asset('js/gallery.js') }}?v={{ filemtime(public_path('js/gallery.js')) }}" defer></script>
+@endpush
