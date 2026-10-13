@@ -271,6 +271,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
     color: rgba(255, 255, 255, 0.9);
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.25rem; }
+/* На телефон без фоново видео празният екран над текста е излишен */
+@media (max-width: 719px) { .hero { min-height: auto; } }
 
 /* ---------- Секции ---------- */
 .sec { padding-block: clamp(4rem, 9vw, 8rem); }
