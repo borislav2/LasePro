@@ -69,7 +69,7 @@
     <section class="sec sec--dark">
         <div class="wrap gal-cta">
             <h2 class="sec__title">{{ __('messages.ready_to_transform') }}</h2>
-            <a class="btn btn--beam" href="{{ route('home') }}#contact">{{ __('messages.get_free_quote') }}</a>
+            <a class="btn btn--beam" href="{{ route('home') }}#contact">{{ __('messages.get_quote_now') }}</a>
         </div>
     </section>
 
