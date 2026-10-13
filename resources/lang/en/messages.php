@@ -184,6 +184,7 @@ return [
     'ready_to_transform' => 'Ready to Transform Your Surfaces?',
     'get_quote_cta' => 'Get a free quote for your laser cleaning project. We handle wood, stone, and metal surfaces.',
     'get_free_quote' => 'Get Free Quote',
+    'get_quote_now' => 'Get a quote right away!',
     
     // Contact
     'get_in_touch' => 'GET IN TOUCH',

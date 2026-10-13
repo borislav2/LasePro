@@ -54,10 +54,6 @@
 
     {{-- Hero --}}
     <section class="hero">
-        <video class="hero__video" autoplay muted loop playsinline preload="metadata" data-lazyplay aria-hidden="true">
-            <source src="{{ asset('images/introvideo.mp4') }}" type="video/mp4">
-        </video>
-        <div class="hero__shade"></div>
 
         <div class="wrap hero__inner">
             <h1 class="hero__title">
@@ -68,7 +64,7 @@
             </h1>
             <p class="hero__lead">{{ __('messages.hero_lead') }}</p>
             <div class="hero__actions">
-                <a class="btn btn--beam" href="#contact">{{ __('messages.get_free_quote') }}</a>
+                <a class="btn btn--beam" href="#contact">{{ __('messages.get_quote_now') }}</a>
                 <a class="btn btn--ghost" href="{{ route('gallery') }}">{{ __('messages.view_gallery') }}</a>
             </div>
         </div>
