@@ -182,7 +182,7 @@ return [
     'featured_work' => 'Featured Work',
     'no_media_found' => 'No media found',
     'try_different_filter' => 'Try selecting a different category or type.',
-    'ready_to_transform' => 'Ready to Transform Your Surfaces?',
+    'ready_to_transform' => 'Have a question?',
     'get_quote_cta' => 'Get a free quote for your laser cleaning project. We handle wood, stone, and metal surfaces.',
     'get_free_quote' => 'Get Free Quote',
     'get_quote_now' => 'Get a quote right away!',
