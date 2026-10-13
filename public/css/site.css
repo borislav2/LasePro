@@ -683,9 +683,6 @@ textarea.field__input { resize: vertical; min-height: 7.5rem; }
 /* ---------- Движение ---------- */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    /* еднократният лъч в заглавието се пропуска */
-    .hero__text, .hero__title::after { animation: none; }
-    .hero__title::after { display: none; }
     .tile__media { transition: none; }
     /* преходът на панелите е отговор на действие — остава, но по-кратък */
     .mat, .mat::after { transition-duration: 0.4s; }
