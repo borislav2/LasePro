@@ -36,6 +36,7 @@ return [
     'all_work' => 'Full gallery',
     'contact_lead' => 'Send photos of your project on Viber or WhatsApp and we will get back to you.',
     'chat_title' => 'Message us directly',
+    'partners_title' => 'Our partners',
     'form_success' => 'Your request has been sent. We will contact you soon.',
     'lb_close' => 'Close',
     'lb_prev' => 'Previous',

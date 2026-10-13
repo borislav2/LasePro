@@ -32,6 +32,13 @@
         ['key' => 'metal', 'video' => 'images/metalvideo2.mp4'],
     ];
 
+    $partners = [
+        ['name' => 'Империум груп', 'url' => 'https://imperiumgroup-bg.com/', 'logo' => 'imperium.png'],
+        ['name' => 'VIVAHOME', 'url' => 'https://vivahome.bg/', 'logo' => 'vivahome.png'],
+        ['name' => 'Todoor', 'url' => 'https://todoor.bg/', 'logo' => 'todoor.svg'],
+        ['name' => 'МААТ Инженеринг', 'url' => 'https://maatengineering.bg/shop/', 'logo' => 'maat.png'],
+    ];
+
     $cmp = 'storage/media/images/metal/compare/';
     $pairs = [
         [
@@ -139,6 +146,28 @@
             <div class="more">
                 <a class="btn btn--line" href="{{ route('gallery') }}">{{ __('messages.all_work') }}</a>
             </div>
+        </div>
+    </section>
+
+    {{-- Партньори --}}
+    <section class="sec sec--slim" id="partners">
+        <div class="wrap">
+            <div class="sec__head">
+                <h2 class="sec__title">{{ __('messages.partners_title') }}</h2>
+            </div>
+
+            <ul class="partners">
+                @foreach ($partners as $partner)
+                    <li>
+                        <a class="partner" href="{{ $partner['url'] }}" target="_blank" rel="noopener">
+                            <span class="partner__logo">
+                                <img src="{{ asset('images/partners/' . $partner['logo']) }}" alt="" loading="lazy">
+                            </span>
+                            <span class="partner__name">{{ $partner['name'] }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </section>
 
