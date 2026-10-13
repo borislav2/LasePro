@@ -526,6 +526,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
     clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
 }
 
+/* Viber / WhatsApp */
+.chat { display: grid; gap: 1rem; align-content: start; }
+.chat__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 2.4vw, 1.8rem); line-height: 1.2; }
+.chat__btn { width: 100%; justify-content: flex-start; gap: 1rem; padding: 1.25rem 1.75rem; font-size: 1.35rem; }
+.chat__btn svg { flex: none; }
+.btn--viber { background: #7360f2; color: #fff; }
+.btn--viber:hover { background: #5f4ee0; }
+.btn--viber .chat__glyph { fill: #7360f2; }
+.btn--viber:hover .chat__glyph { fill: #5f4ee0; }
+.btn--wa { background: #25d366; color: #06240f; }
+.btn--wa:hover { background: #1fbd5b; }
+.btn--wa:focus-visible { outline-color: #06240f; }
+
 /* ---------- Форма ---------- */
 .form { display: grid; gap: 1.25rem; }
 .form__row { display: grid; gap: 1.25rem; }
