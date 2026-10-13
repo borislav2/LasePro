@@ -24,7 +24,7 @@ return [
     'theme_toggle' => 'Toggle theme',
     'hero_headline_1' => 'Laser',
     'hero_headline_2' => 'cleaning',
-    'hero_lead' => 'We bring wood, stone and metal back to their original surface. No chemicals, no damage.',
+    'hero_lead' => 'Every surface deserves a fresh start!',
     'materials_title' => 'What we clean',
     'projects_count' => ':count projects',
     'proof_title' => 'See the difference',
