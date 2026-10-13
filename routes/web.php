@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MediaController;
 use App\Models\Media;
+use Illuminate\Support\Carbon;
 
 // Home page - Laser Cleaning Website
 Route::get('/', function () {
@@ -43,6 +44,8 @@ Route::get('/robots.txt', function () {
         'User-agent: *',
         'Disallow: /media',
         'Disallow: /login',
+        'Disallow: /admin',
+        'Disallow: /language/',
         '',
         'Sitemap: ' . route('sitemap'),
     ];
@@ -52,12 +55,24 @@ Route::get('/robots.txt', function () {
 
 // Sitemap
 Route::get('/sitemap.xml', function () {
+    $updated = Media::published()
+        ->selectRaw('category, max(updated_at) as t')
+        ->groupBy('category')
+        ->pluck('t', 'category')
+        ->map(fn ($t) => Carbon::parse($t));
+
+    $galleryAt = $updated->max();
+    $homeAt = collect([$galleryAt, Carbon::createFromTimestamp(filemtime(resource_path('views/laser-home.blade.php')))])
+        ->filter()
+        ->max();
+    $day = fn ($t) => $t?->toDateString();
+
     $urls = [
-        ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
-        ['loc' => route('gallery'), 'changefreq' => 'weekly', 'priority' => '0.8'],
-        ['loc' => route('gallery', ['category' => 'wood']), 'changefreq' => 'weekly', 'priority' => '0.6'],
-        ['loc' => route('gallery', ['category' => 'stone']), 'changefreq' => 'weekly', 'priority' => '0.6'],
-        ['loc' => route('gallery', ['category' => 'metal']), 'changefreq' => 'weekly', 'priority' => '0.6'],
+        ['loc' => url('/'), 'lastmod' => $day($homeAt), 'changefreq' => 'weekly', 'priority' => '1.0'],
+        ['loc' => route('gallery'), 'lastmod' => $day($galleryAt), 'changefreq' => 'weekly', 'priority' => '0.8'],
+        ['loc' => route('gallery', ['category' => 'wood']), 'lastmod' => $day($updated->get('wood')), 'changefreq' => 'weekly', 'priority' => '0.6'],
+        ['loc' => route('gallery', ['category' => 'stone']), 'lastmod' => $day($updated->get('stone')), 'changefreq' => 'weekly', 'priority' => '0.6'],
+        ['loc' => route('gallery', ['category' => 'metal']), 'lastmod' => $day($updated->get('metal')), 'changefreq' => 'weekly', 'priority' => '0.6'],
     ];
 
     return response()
