@@ -187,7 +187,7 @@ return [
     
     // Contact
     'get_in_touch' => 'GET IN TOUCH',
-    'contact_subtitle' => 'Ready for transformation?',
+    'contact_subtitle' => 'Get a quote right away!',
     'get_quote' => 'GET FREE QUOTE',
     'your_name' => 'Your Name',
     'phone_number' => 'Phone Number',

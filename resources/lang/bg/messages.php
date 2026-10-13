@@ -182,7 +182,7 @@ return [
     
     // Contact
     'get_in_touch' => 'СВЪРЖЕТЕ СЕ С НАС',
-    'contact_subtitle' => 'Готови ли сте за трансформация?',
+    'contact_subtitle' => 'Получете оферта веднага!',
     'get_quote' => 'Искай оферта',
     'your_name' => 'Вашето име',
     'phone_number' => 'Телефонен номер',
